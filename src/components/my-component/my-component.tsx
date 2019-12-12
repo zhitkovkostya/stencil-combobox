@@ -8,6 +8,11 @@ import { format } from '../../utils/utils';
 })
 export class MyComponent {
   /**
+   * Salutation
+   */
+
+  @Prop() salutation: string;
+  /**
    * The first name
    */
   @Prop() first: string;
@@ -23,7 +28,7 @@ export class MyComponent {
   @Prop() last: string;
 
   private getText(): string {
-    return format(this.first, this.middle, this.last);
+    return format(this.salutation, this.first, this.middle, this.last);
   }
 
   render() {
