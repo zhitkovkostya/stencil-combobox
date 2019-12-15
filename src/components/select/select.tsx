@@ -17,18 +17,44 @@ export class Select {
 
   @State() _isOpened: boolean = false;
 
+  @State() _focusedItemIndex: number = 0;
+
   @Event() fieldChange: EventEmitter;
 
   @Listen('click', {target: 'window'})
-  handleOuterClick(event) {
+  onOuterClick(event) {
     if (!this.el.contains(event.target)) {
       this.close();
     }
   }
 
+  @Listen('keydown')
+  onKeyDown(event: KeyboardEvent) {
+    console.log(event.key);
+    switch(event.key) {
+      case 'Backspace':
+        this.onBackspaceKeyDown();
+        break;
+      case 'Enter':
+        this.onEnterKeyDown();
+        break;
+      case 'Escape':
+        this.onEscapeKeyDown();
+        break;
+      case 'ArrowDown':
+        this.onArrowDownKeyDown();
+        break;
+      case 'ArrowUp':
+        this.onArrowUpKeyDown();
+        break;
+    }
+  }
+
   componentDidLoad() {
     this.refreshField();
+    this.refreshItems();
   }
+
 
   render() {
     return (
@@ -59,6 +85,10 @@ export class Select {
     );
   }
 
+  getItemElements() {
+    return this.el.querySelectorAll('li');
+  }
+
   onFieldClick() {
     this._isOpened ? this.close() : this.open();
   }
@@ -75,7 +105,47 @@ export class Select {
     } else {
       this.selectItem(itemElement);
     }
-  };
+  }
+
+  onBackspaceKeyDown() {
+    const selectedItemElements = this.el.querySelectorAll('li[selected]');
+
+    if (selectedItemElements.length) {
+      this.deselectItem(selectedItemElements[selectedItemElements.length - 1]);
+    }
+  }
+
+  onEnterKeyDown() {
+    const itemElements = this.getItemElements();
+    let focusedItemElement: HTMLElement;
+
+    if (this._isOpened) {
+      focusedItemElement = itemElements[this._focusedItemIndex];
+      this.selectItem(focusedItemElement);
+    } else {
+      this.open();
+    }
+  }
+
+  onEscapeKeyDown() {
+    this.close();
+  }
+
+  onArrowDownKeyDown() {
+    this._focusedItemIndex = (this._focusedItemIndex < this.getItemElements().length - 1)
+      ? this._focusedItemIndex + 1
+      : 0;
+
+    this.refreshFocusedItem();
+  }
+
+  onArrowUpKeyDown() {
+    this._focusedItemIndex = (this._focusedItemIndex > 0)
+      ? this._focusedItemIndex - 1
+      : this.getItemElements().length - 1;
+
+    this.refreshFocusedItem();
+  }
 
   open() {
     this.togglePopup(true);
@@ -104,6 +174,25 @@ export class Select {
     for (let i = 0; i < selectedItemElements.length; i++) {
       this._fieldElement.appendChild(this.createTag(selectedItemElements[i]));
     }
+  }
+
+  refreshItems() {
+    const itemElements = this.getItemElements();
+    let itemElement: HTMLElement;
+    let i = 0;
+
+    for(i; i < itemElements.length; i++) {
+      itemElement = itemElements[i];
+      itemElement.setAttribute("role", "option");
+      itemElement.setAttribute("aria-selected", String(itemElement.hasAttribute("selected")));
+      itemElement.setAttribute("tabindex", '-1');
+    }
+
+    this._focusedItemIndex = 0;
+  };
+
+  refreshFocusedItem() {
+    this.getItemElements()[this._focusedItemIndex].focus();
   }
 
   createPlaceholder() {
