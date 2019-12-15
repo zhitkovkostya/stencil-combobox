@@ -6,6 +6,7 @@ export const config: Config = {
   plugins: [
     sass()
   ],
+  globalStyle: 'src/globals/globals.scss',
   outputTargets: [
     {
       type: 'dist',
