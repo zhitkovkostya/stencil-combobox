@@ -132,17 +132,17 @@ export class Select {
   }
 
   onArrowDownKeyDown() {
-    this._focusedItemIndex = (this._focusedItemIndex < this.getItemElements().length - 1)
-      ? this._focusedItemIndex + 1
-      : 0;
+    if (this._focusedItemIndex + 1 < this.getItemElements().length) {
+      this._focusedItemIndex += 1;
+    }
 
     this.refreshFocusedItem();
   }
 
   onArrowUpKeyDown() {
-    this._focusedItemIndex = (this._focusedItemIndex > 0)
-      ? this._focusedItemIndex - 1
-      : this.getItemElements().length - 1;
+    if (this._focusedItemIndex - 1 >= 0) {
+      this._focusedItemIndex = this._focusedItemIndex - 1;
+    }
 
     this.refreshFocusedItem();
   }
