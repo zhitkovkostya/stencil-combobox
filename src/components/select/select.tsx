@@ -38,6 +38,9 @@ export class Select {
       case 'Enter':
         this.onEnterKeyDown();
         break;
+      case ' ':
+        this.onSpaceKeyDown();
+        break;
       case 'Escape':
         this.onEscapeKeyDown();
         break;
@@ -123,6 +126,12 @@ export class Select {
       focusedItemElement = itemElements[this._focusedItemIndex];
       this.selectItem(focusedItemElement);
     } else {
+      this.open();
+    }
+  }
+
+  onSpaceKeyDown() {
+    if (!this._isOpened) {
       this.open();
     }
   }
@@ -249,6 +258,7 @@ export class Select {
     this.fireFieldChangeEvent();
     this.refreshField();
     this.close();
+    this._fieldElement.focus();
   }
 
   fireFieldChangeEvent() {
