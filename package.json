@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "@types/jest": "24.0.23",
+    "modernizr": "^3.8.0",
     "request": "2.88.0"
   }
 }

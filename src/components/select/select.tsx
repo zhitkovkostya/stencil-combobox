@@ -1,4 +1,5 @@
 import {Component, Element, Event, Prop, State, EventEmitter, h, Listen} from '@stencil/core';
+import {isTouchCapable} from 'modernizr';
 
 @Component({
   tag: 'my-select',
@@ -157,7 +158,11 @@ export class Select {
   }
 
   open() {
-    this.togglePopup(true);
+    if (isTouchCapable) {
+
+    } else {
+      this.togglePopup(true);
+    }
   }
 
   close() {
