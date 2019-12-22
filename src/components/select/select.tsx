@@ -1,5 +1,5 @@
 import {Component, Element, Event, Prop, State, EventEmitter, h, Listen} from '@stencil/core';
-import {isTouchCapable} from 'modernizr';
+import {isTouchCapable} from '../../utils/utils';
 
 @Component({
   tag: 'my-select',
