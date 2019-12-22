@@ -1,4 +1,7 @@
 import {storiesOf} from '@storybook/html';
+import {withActions} from '@storybook/addon-actions';
+
+import readme from './readme.md';
 
 // const options = [
 //   {id: 1, title: 'Argentina', selected: true},
@@ -15,6 +18,7 @@ import {storiesOf} from '@storybook/html';
 // ];
 
 storiesOf('Select', module)
+  .addDecorator(withActions('fieldChange'))
   .addParameters({ jest: ['select'] })
   .add('Default Component', () => `
     <my-select>
@@ -30,4 +34,8 @@ storiesOf('Select', module)
       <li value="10">Russia</li>
       <li value="11">United States</li>
     </my-select>
-  `);
+  `, {
+    notes: {
+      markdown: readme
+    }
+  });
