@@ -1,5 +1,16 @@
-import { configure } from '@storybook/html';
+import { configure, addDecorator } from '@storybook/html';
+import { withTests } from '@storybook/addon-jest';
+import results from '../jest-test-results.json';
 
-const req = require.context('../src/components', true, /\.stories\.tsx?$/);
+addDecorator(
+  withTests({
+    results,
+    filesExt: '.spec.ts'
+  })
+);
 
-configure(req, module);
+const req = require.context('../src', true, /\.stories\.js$/);
+function loadStories() {
+  req.keys().forEach(filename => req(filename));
+}
+configure(loadStories, module);

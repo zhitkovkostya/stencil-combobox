@@ -7,17 +7,17 @@ export const config: Config = {
     sass()
   ],
   globalStyle: 'src/globals/globals.scss',
-  outputTargets: [
+  outputTargets:[
     {
-      type: 'dist',
-      esmLoaderPath: '../loader'
-    },
-    {
-      type: 'docs-readme'
+      type: 'dist'
     },
     {
       type: 'www',
-      serviceWorker: null // disable service workers
+      serviceWorker: null
+    },
+    {
+      type: 'docs-readme'
     }
-  ]
+  ],
+  preamble: '© z-ui - MIT License',
 };

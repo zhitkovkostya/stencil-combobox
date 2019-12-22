@@ -3,7 +3,7 @@ import {isTouchCapable} from '../../utils/utils';
 
 @Component({
   tag: 'my-select',
-  styleUrl: 'select.scss',
+  styleUrl: 'select.css',
   shadow: true
 })
 export class Select {
@@ -158,7 +158,7 @@ export class Select {
   }
 
   open() {
-    if (isTouchCapable) {
+    if (isTouchCapable()) {
 
     } else {
       this.togglePopup(true);

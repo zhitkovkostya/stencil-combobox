@@ -1,6 +1,6 @@
 import { Select } from './select';
 
-describe('my-select', () => {
+describe('select', () => {
   it('builds', () => {
     expect(new Select()).toBeTruthy();
   });

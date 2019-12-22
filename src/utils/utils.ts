@@ -1,6 +1,5 @@
-export function format(salutation: string, first: string, middle: string, last: string): string {
+export function format(first: string, middle: string, last: string): string {
   return (
-    (salutation || '') +
     (first || '') +
     (middle ? ` ${middle}` : '') +
     (last ? ` ${last}` : '')
@@ -14,8 +13,7 @@ export function isTouchCapable() {
     return window.matchMedia(query).matches;
   };
 
-  if (('ontouchstart' in window)
-    || window.DocumentTouch && document instanceof DocumentTouch) {
+  if ('ontouchstart' in window) {
     return true;
   }
 

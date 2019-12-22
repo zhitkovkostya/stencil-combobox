@@ -10,12 +10,6 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 
 
 export namespace Components {
-  interface MyButton {
-    /**
-    * Text
-    */
-    'text': string;
-  }
   interface MySelect {
     'placeholder': string;
   }
@@ -24,37 +18,23 @@ export namespace Components {
 declare global {
 
 
-  interface HTMLMyButtonElement extends Components.MyButton, HTMLStencilElement {}
-  var HTMLMyButtonElement: {
-    prototype: HTMLMyButtonElement;
-    new (): HTMLMyButtonElement;
-  };
-
   interface HTMLMySelectElement extends Components.MySelect, HTMLStencilElement {}
   var HTMLMySelectElement: {
     prototype: HTMLMySelectElement;
     new (): HTMLMySelectElement;
   };
   interface HTMLElementTagNameMap {
-    'my-button': HTMLMyButtonElement;
     'my-select': HTMLMySelectElement;
   }
 }
 
 declare namespace LocalJSX {
-  interface MyButton {
-    /**
-    * Text
-    */
-    'text'?: string;
-  }
   interface MySelect {
     'onFieldChange'?: (event: CustomEvent<any>) => void;
     'placeholder'?: string;
   }
 
   interface IntrinsicElements {
-    'my-button': MyButton;
     'my-select': MySelect;
   }
 }
@@ -65,7 +45,6 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
-      'my-button': LocalJSX.MyButton & JSXBase.HTMLAttributes<HTMLMyButtonElement>;
       'my-select': LocalJSX.MySelect & JSXBase.HTMLAttributes<HTMLMySelectElement>;
     }
   }

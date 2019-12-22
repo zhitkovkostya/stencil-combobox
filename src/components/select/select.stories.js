@@ -15,6 +15,7 @@ import {storiesOf} from '@storybook/html';
 // ];
 
 storiesOf('Select', module)
+  .addParameters({ jest: ['select'] })
   .add('Default Component', () => `
     <my-select>
       <li value="1" selected>Argentina</li>
