@@ -10,32 +10,36 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 
 
 export namespace Components {
-  interface MySelect {
-    'placeholder': string;
+  interface MyCombobox {
+    'disabled'?: boolean;
+    'options'?: Array<ComboboxOption>;
+    'placeholder'?: string;
   }
 }
 
 declare global {
 
 
-  interface HTMLMySelectElement extends Components.MySelect, HTMLStencilElement {}
-  var HTMLMySelectElement: {
-    prototype: HTMLMySelectElement;
-    new (): HTMLMySelectElement;
+  interface HTMLMyComboboxElement extends Components.MyCombobox, HTMLStencilElement {}
+  var HTMLMyComboboxElement: {
+    prototype: HTMLMyComboboxElement;
+    new (): HTMLMyComboboxElement;
   };
   interface HTMLElementTagNameMap {
-    'my-select': HTMLMySelectElement;
+    'my-combobox': HTMLMyComboboxElement;
   }
 }
 
 declare namespace LocalJSX {
-  interface MySelect {
-    'onFieldChange'?: (event: CustomEvent<any>) => void;
+  interface MyCombobox {
+    'disabled'?: boolean;
+    'onMy-change'?: (event: CustomEvent<any>) => void;
+    'options'?: Array<ComboboxOption>;
     'placeholder'?: string;
   }
 
   interface IntrinsicElements {
-    'my-select': MySelect;
+    'my-combobox': MyCombobox;
   }
 }
 
@@ -45,7 +49,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
-      'my-select': LocalJSX.MySelect & JSXBase.HTMLAttributes<HTMLMySelectElement>;
+      'my-combobox': LocalJSX.MyCombobox & JSXBase.HTMLAttributes<HTMLMyComboboxElement>;
     }
   }
 }

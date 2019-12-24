@@ -1,11 +1,11 @@
-.select {
+.combobox {
   position: relative;
   box-sizing: border-box;
   display: inline-block;
   width: 20em;
 }
 
-.select-field {
+.combobox-field {
   overflow: hidden;
   padding: .2em .2em 0 .2em;
   border: 1px solid #adadad;
@@ -15,7 +15,7 @@
   user-select: none;
 }
 
-.select-field-placeholder {
+.combobox-field-placeholder {
   margin-bottom: .2em;
   padding: .25em .5em;
   border: 1px solid transparent;
@@ -23,7 +23,7 @@
   line-height: 1;
 }
 
-.select-tag {
+.combobox-tag {
   position: relative;
   display: inline-block;
   padding: .25em 1.5em .25em .5em;
@@ -34,19 +34,19 @@
   vertical-align: middle;
 }
 
-.select-tag:last-child {
+.combobox-tag:last-child {
   margin-right: 0;
 }
 
-.select-tag:hover {
+.combobox-tag:hover {
   background: #efefef;
 }
 
-.select-tag-text {
+.combobox-tag-text {
   min-height: 1em;
 }
 
-.select-tag-remove-button {
+.combobox-tag-remove-button {
   position: absolute;
   top: .25em;
   right: .25em;
@@ -55,12 +55,12 @@
   opacity: 0.3;
 }
 
-.select-tag-remove-button:hover {
+.combobox-tag-remove-button:hover {
   opacity: 1;
 }
 
-.select-tag-remove-button:before,
-.select-tag-remove-button:after {
+.combobox-tag-remove-button:before,
+.combobox-tag-remove-button:after {
   content: ' ';
   position: absolute;
   left: .5em;
@@ -69,49 +69,50 @@
   background-color: #333;
 }
 
-.select-tag-remove-button:before {
+.combobox-tag-remove-button:before {
   transform: rotate(45deg);
 }
 
-.select-tag-remove-button:after {
+.combobox-tag-remove-button:after {
   transform: rotate(-45deg);
 }
 
-.select-popup {
+.combobox-popup {
   position: absolute;
   top: calc(100% + 0.5em);
   z-index: 1000;
   display: none;
-  overflow-y: auto;
   width: 100%;
-  max-height: 300px;
   box-sizing: border-box;
   border: 1px solid #bdbdbd;
   border-radius: .2em;
   background: white;
 }
 
-.select-list {
-  padding: 0;
+.combobox-list {
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
+  max-height: 300px;
   margin: 0;
+  padding: 0;
 }
 
-::slotted(li) {
+.combobox-option {
   padding: .5em 1em;
   min-height: 1em;
   list-style: none;
   cursor: pointer;
 }
 
-::slotted(li[selected]) {
+.combobox-option[aria-selected="true"] {
   background: #f3f3f3;
 }
 
-::slotted(li:focus) {
+.combobox-option[aria-activedescendant="true"] {
   outline: dotted 1px #333;
-  background: #e9e9e9;
 }
 
-::slotted(li:hover) {
+.combobox-option:hover {
   background: #e9e9e9;
 }
