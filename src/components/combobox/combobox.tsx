@@ -1,4 +1,5 @@
 import {Component, Element, Event, Prop, State, EventEmitter, h, Listen} from '@stencil/core';
+import uniqueId from 'lodash.uniqueid';
 import {isTouchCapable} from '../../utils/utils';
 import ComboboxOption from './combobox-option';
 
@@ -8,9 +9,8 @@ import ComboboxOption from './combobox-option';
   shadow: true
 })
 export class ComboBox {
-  // private _controlElement?: HTMLElement;
   private _fieldElement?: HTMLElement;
-  private _popupElement?: HTMLElement;
+  private _dropdownElement?: HTMLElement;
   private _listboxElement?: HTMLUListElement;
 
   @Element() el: HTMLElement;
@@ -21,7 +21,7 @@ export class ComboBox {
 
   @Prop({mutable: true}) options?: Array<ComboboxOption> = [];
 
-  @State() _isOpened: boolean = false;
+  @State() _isExpanded: boolean = false;
 
   @State() _focusedItemIndex: number = -1;
 
@@ -30,7 +30,7 @@ export class ComboBox {
   @Listen('click', {target: 'window'})
   onOuterClick(event) {
     if (!this.el.contains(event.target)) {
-      this.close(false);
+      this.collapse(false);
     }
   }
 
@@ -66,9 +66,10 @@ export class ComboBox {
   render() {
     return (
       <div
-        class='combobox'
-        // ref={el => this._controlElement = el as HTMLElement}
+        id={uniqueId('combobox-')}
+        class={{'combobox': true, 'combobox-collapsed': !this._isExpanded}}
         role='combobox'
+        aria-expanded={String(this._isExpanded)}
       >
         <div
           class='combobox-field'
@@ -77,13 +78,15 @@ export class ComboBox {
           tabIndex={0}
         >
         </div>
-        <div class='combobox-popup' ref={el => this._popupElement = el as HTMLElement}>
+        <div
+          class='combobox-dropdown'
+          ref={el => this._dropdownElement = el as HTMLElement}
+        >
           <ul
-            class='combobox-list'
+            class='combobox-listbox'
             ref={el => this._listboxElement = el as HTMLUListElement}
             onClick={this.onListItemClick.bind(this)}
             role='listbox'
-            aria-selectable='true'
           >
             {this.options.map((option) => (
               <li
@@ -103,7 +106,7 @@ export class ComboBox {
   }
 
   getItemElements() {
-    return this._popupElement.querySelectorAll('li');
+    return this._dropdownElement.querySelectorAll('li');
   }
 
   getItemSelectedState(itemElement: HTMLElement) {
@@ -111,7 +114,7 @@ export class ComboBox {
   }
 
   onFieldClick() {
-    this._isOpened ? this.close() : this.open();
+    this._isExpanded ? this.collapse() : this.expand();
   }
 
   onListItemClick(event) {
@@ -134,25 +137,25 @@ export class ComboBox {
     const itemElements = this.getItemElements();
     const focusedItemElement = itemElements[this._focusedItemIndex];
 
-    if (this._isOpened) {
+    if (this._isExpanded) {
       if (focusedItemElement) {
         this.toggleItem(focusedItemElement);
       } else {
-        this.close();
+        this.collapse();
       }
     } else {
-      this.open();
+      this.expand();
     }
   }
 
   onSpaceKeyDown() {
-    if (!this._isOpened) {
-      this.open();
+    if (!this._isExpanded) {
+      this.expand();
     }
   }
 
   onEscapeKeyDown() {
-    this.close();
+    this.collapse();
   }
 
   onArrowDownKeyDown() {
@@ -167,7 +170,7 @@ export class ComboBox {
     }
   }
 
-  open() {
+  expand() {
     if (isTouchCapable()) {
 
     } else {
@@ -177,7 +180,7 @@ export class ComboBox {
     this.focusItem(-1);
   }
 
-  close(shouldFocusField: boolean = true) {
+  collapse(shouldFocusField: boolean = true) {
     this.togglePopup(false);
 
     if (shouldFocusField) {
@@ -217,10 +220,8 @@ export class ComboBox {
     }
   }
 
-  togglePopup(isOpened: boolean) {
-    const displayValue = isOpened ? 'initial' : 'none';
-    this._isOpened = isOpened;
-    this._popupElement.style.display = displayValue;
+  togglePopup(isExpanded: boolean) {
+    this._isExpanded = isExpanded;
   }
 
   refreshField() {
@@ -279,7 +280,7 @@ export class ComboBox {
 
     this.fireChangeEvent();
     this.refreshField();
-    this.close();
+    this.collapse();
   }
 
   fireChangeEvent() {

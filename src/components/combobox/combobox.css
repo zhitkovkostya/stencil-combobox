@@ -5,6 +5,10 @@
   width: 20em;
 }
 
+.combobox-collapsed .combobox-dropdown {
+  display: none;
+}
+
 .combobox-field {
   overflow: hidden;
   padding: .2em .2em 0 .2em;
@@ -77,11 +81,10 @@
   transform: rotate(-45deg);
 }
 
-.combobox-popup {
+.combobox-dropdown {
   position: absolute;
   top: calc(100% + 0.5em);
   z-index: 1000;
-  display: none;
   width: 100%;
   box-sizing: border-box;
   border: 1px solid #bdbdbd;
@@ -89,7 +92,7 @@
   background: white;
 }
 
-.combobox-list {
+.combobox-listbox {
   overflow-x: hidden;
   overflow-y: auto;
   width: 100%;

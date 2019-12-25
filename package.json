@@ -24,7 +24,8 @@
     "storybook": "start-storybook -p 9001 -c .storybook -s www"
   },
   "dependencies": {
-    "@stencil/sass": "^1.1.1"
+    "@stencil/sass": "^1.1.1",
+    "lodash.uniqueid": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
