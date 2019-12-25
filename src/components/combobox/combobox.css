@@ -5,7 +5,7 @@
   width: 20em;
 }
 
-.combobox-collapsed .combobox-dropdown {
+.combobox[aria-expanded="false"] .combobox-dropdown {
   display: none;
 }
 

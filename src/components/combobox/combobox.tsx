@@ -34,6 +34,11 @@ export class ComboBox {
     }
   }
 
+  @Listen('blur')
+  onBlur() {
+    this.collapse(false);
+  }
+
   @Listen('keydown')
   onKeyDown(event: KeyboardEvent) {
     switch(event.key) {
@@ -67,7 +72,7 @@ export class ComboBox {
     return (
       <div
         id={uniqueId('combobox-')}
-        class={{'combobox': true, 'combobox-collapsed': !this._isExpanded}}
+        class='combobox'
         role='combobox'
         aria-expanded={String(this._isExpanded)}
       >
@@ -92,7 +97,6 @@ export class ComboBox {
               <li
                 class='combobox-option'
                 role='option'
-                tabIndex={-1}
                 aria-selected={String(option.selected)}
                 aria-activedescendant='false'
               >
