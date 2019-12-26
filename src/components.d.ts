@@ -11,9 +11,10 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 
 export namespace Components {
   interface MyCombobox {
-    'disabled'?: boolean;
-    'options'?: Array<ComboboxOption>;
-    'placeholder'?: string;
+    'disabled': boolean;
+    'options': Array<ComboboxOption>;
+    'placeholder': string;
+    'selectedOptions': Array<ComboboxOption>;
   }
 }
 
@@ -36,6 +37,7 @@ declare namespace LocalJSX {
     'onMy-change'?: (event: CustomEvent<any>) => void;
     'options'?: Array<ComboboxOption>;
     'placeholder'?: string;
+    'selectedOptions'?: Array<ComboboxOption>;
   }
 
   interface IntrinsicElements {

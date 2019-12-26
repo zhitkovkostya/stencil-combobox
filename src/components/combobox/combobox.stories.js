@@ -4,17 +4,22 @@ import {withActions} from '@storybook/addon-actions';
 import readme from './readme.md';
 
 const options = [
-  {id: 1, text: 'Argentina'},
-  {id: 2, text: 'Australia'},
-  {id: 3, text: 'Brazil'},
-  {id: 4, text: 'Canada'},
-  {id: 5, text: 'China'},
-  {id: 6, text: 'France'},
-  {id: 7, text: 'Germany'},
-  {id: 8, text: 'India'},
-  {id: 9, text: 'Mexico'},
-  {id: 10, text: 'Russia'},
-  {id: 11, text: 'United States'}
+  {value: 1, text: 'Argentina'},
+  {value: 2, text: 'Australia'},
+  {value: 3, text: 'Brazil'},
+  {value: 4, text: 'Canada'},
+  {value: 5, text: 'China'},
+  {value: 6, text: 'France'},
+  {value: 7, text: 'Germany'},
+  {value: 8, text: 'India'},
+  {value: 9, text: 'Mexico'},
+  {value: 10, text: 'Russia'},
+  {value: 11, text: 'United States'}
+];
+
+const selectedOptions = [
+  {value: 1, text: 'Argentina'},
+  {value: 2, text: 'Australia'}
 ];
 
 storiesOf('ComboBox', module)
@@ -34,13 +39,8 @@ storiesOf('ComboBox', module)
   .add('Filled', () => {
     const el = document.createElement('my-combobox');
 
-    let optionsFilled = options.map(option => {
-      option.selected = option.id === 1;
-
-      return option;
-    });
-
-    el.options = optionsFilled;
+    el.options = options;
+    el.selectedOptions = selectedOptions;
 
     return el;
   }, {

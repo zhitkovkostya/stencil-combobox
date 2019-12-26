@@ -11,6 +11,8 @@
 
 .combobox-field {
   overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
   padding: .2em .2em 0 .2em;
   border: 1px solid #adadad;
   border-radius: .2em;
@@ -19,12 +21,13 @@
   user-select: none;
 }
 
-.combobox-field-placeholder {
+.combobox-field li {
   margin-bottom: .2em;
   padding: .25em .5em;
   border: 1px solid transparent;
   color: #888;
   line-height: 1;
+  list-style: none;
 }
 
 .combobox-tag {
@@ -52,25 +55,34 @@
 
 .combobox-tag-remove-button {
   position: absolute;
-  top: .25em;
-  right: .25em;
+  top: .5em;
+  right: .5em;
+  display: inline-flex;
+  align-items: center;
   width: 1em;
   height: 1em;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
   opacity: 0.3;
+  outline: none;
+  cursor: pointer;
 }
 
 .combobox-tag-remove-button:hover {
   opacity: 1;
 }
 
-.combobox-tag-remove-button:before,
-.combobox-tag-remove-button:after {
+.combobox-tag-remove-button::before,
+.combobox-tag-remove-button::after {
   content: ' ';
   position: absolute;
   left: .5em;
   width: 2px;
   height: 1em;
   background-color: #333;
+  pointer-events: none;
 }
 
 .combobox-tag-remove-button:before {

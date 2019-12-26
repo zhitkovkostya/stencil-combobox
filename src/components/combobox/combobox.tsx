@@ -1,7 +1,12 @@
 import {Component, Element, Event, Prop, State, EventEmitter, h, Listen} from '@stencil/core';
 import uniqueId from 'lodash.uniqueid';
 import {isTouchCapable} from '../../utils/utils';
-import ComboboxOption from './combobox-option';
+
+type ComboboxOption = {
+  text: string;
+  value: string;
+  selected: boolean;
+}
 
 @Component({
   tag: 'my-combobox',
@@ -15,15 +20,19 @@ export class ComboBox {
 
   @Element() el: HTMLElement;
 
-  @Prop() placeholder?: string = 'Select value';
+  @Prop() placeholder: string = 'Select value';
 
-  @Prop() disabled?: boolean = false;
+  @Prop() disabled: boolean = false;
 
-  @Prop({mutable: true}) options?: Array<ComboboxOption> = [];
+  @Prop() options: Array<ComboboxOption> = [];
+
+  @Prop() selectedOptions: Array<ComboboxOption> = [];
+
+  @State() value: Array<ComboboxOption> = [];
 
   @State() _isExpanded: boolean = false;
 
-  @State() _focusedItemIndex: number = -1;
+  @State() _focusedOptionIndex: number = -1;
 
   @Event({eventName: 'my-change'}) changeEvent: EventEmitter;
 
@@ -32,11 +41,6 @@ export class ComboBox {
     if (!this.el.contains(event.target)) {
       this.collapse(false);
     }
-  }
-
-  @Listen('blur')
-  onBlur() {
-    this.collapse(false);
   }
 
   @Listen('keydown')
@@ -51,6 +55,9 @@ export class ComboBox {
       case ' ':
         this.onSpaceKeyDown();
         break;
+      case 'Tab':
+        this.onTabKeyDown();
+        break;
       case 'Escape':
         this.onEscapeKeyDown();
         break;
@@ -63,10 +70,13 @@ export class ComboBox {
     }
   }
 
-  componentDidLoad() {
-    this.refreshField();
-  }
 
+  componentWillLoad() {
+    this.value = [
+      ...this.value,
+      ...this.selectedOptions
+    ]
+  }
 
   render() {
     return (
@@ -82,6 +92,25 @@ export class ComboBox {
           onClick={this.onFieldClick.bind(this)}
           tabIndex={0}
         >
+          {this.value.map(option => (
+            <div
+              class='combobox-tag'
+              data-value={option.value}
+            >
+              <div class='combobox-tag-text'>
+                {option.text}
+              </div>
+              <button
+                class='combobox-tag-remove-button'
+                onClick={this.onListItemClick.bind(this, option)}
+              ></button>
+            </div>
+          ))}
+          <li>
+            {this.value.length === 0 &&
+              this.placeholder
+            }
+          </li>
         </div>
         <div
           class='combobox-dropdown'
@@ -90,15 +119,16 @@ export class ComboBox {
           <ul
             class='combobox-listbox'
             ref={el => this._listboxElement = el as HTMLUListElement}
-            onClick={this.onListItemClick.bind(this)}
             role='listbox'
           >
-            {this.options.map((option) => (
+            {this.options.map((option, index) => (
               <li
                 class='combobox-option'
                 role='option'
-                aria-selected={String(option.selected)}
-                aria-activedescendant='false'
+                aria-selected={String(this.checkSelectedState(option))}
+                aria-activedescendant={String(this._focusedOptionIndex === index)}
+                data-value={option.value}
+                onClick={this.onListItemClick.bind(this, option)}
               >
                 {option.text}
               </li>
@@ -109,41 +139,40 @@ export class ComboBox {
     );
   }
 
-  getItemElements() {
-    return this._dropdownElement.querySelectorAll('li');
-  }
-
   getItemSelectedState(itemElement: HTMLElement) {
     return itemElement.getAttribute('aria-selected') === 'true';
+  }
+
+  checkSelectedState(option: ComboboxOption) {
+    return this.value.some(selectedOption => selectedOption.value === option.value);
   }
 
   onFieldClick() {
     this._isExpanded ? this.collapse() : this.expand();
   }
 
-  onListItemClick(event) {
+  onListItemClick(option: ComboboxOption, event) {
+    event.preventDefault();
     event.stopPropagation();
 
-    const itemElement = event.target;
-
-    this.toggleItem(itemElement);
+    this.toggleOption(option);
   }
 
   onBackspaceKeyDown() {
-    const selectedItemElements = this.el.querySelectorAll('li[aria-selected]');
+    const lastOptionIndex = this.value.length - 1;
+    const lastOption = this.value[lastOptionIndex];
 
-    if (selectedItemElements.length) {
-      this.toggleItem(selectedItemElements[selectedItemElements.length - 1]);
+    if (lastOption) {
+      this.deselectOption(lastOption);
     }
   }
 
   onEnterKeyDown() {
-    const itemElements = this.getItemElements();
-    const focusedItemElement = itemElements[this._focusedItemIndex];
+    const focusedOption = this.options[this._focusedOptionIndex];
 
     if (this._isExpanded) {
-      if (focusedItemElement) {
-        this.toggleItem(focusedItemElement);
+      if (focusedOption) {
+        this.toggleOption(focusedOption);
       } else {
         this.collapse();
       }
@@ -158,25 +187,33 @@ export class ComboBox {
     }
   }
 
+  onTabKeyDown() {
+    this.collapse(false);
+  }
+
   onEscapeKeyDown() {
     this.collapse();
   }
 
   onArrowDownKeyDown() {
-    if (this._focusedItemIndex + 1 < this.getItemElements().length) {
-      this.focusItem(this._focusedItemIndex + 1);
+    const focusedOptionIndex = this._focusedOptionIndex + 1;
+
+    if (focusedOptionIndex < this.options.length) {
+      this.focusItem(focusedOptionIndex);
     }
   }
 
   onArrowUpKeyDown() {
-    if (this._focusedItemIndex - 1 >= 0) {
-      this.focusItem(this._focusedItemIndex - 1);
+    const focusedOptionIndex = this._focusedOptionIndex - 1;
+
+    if (focusedOptionIndex >= 0) {
+      this.focusItem(focusedOptionIndex);
     }
   }
 
   expand() {
     if (isTouchCapable()) {
-
+      // TODO: display native option list
     } else {
       this.togglePopup(true);
     }
@@ -192,34 +229,25 @@ export class ComboBox {
     }
   }
 
-  focusItem(index) {
-    const itemElements = this.getItemElements();
-    const currentItemElement = itemElements[this._focusedItemIndex];
-    const newItemElement = itemElements[index];
+  focusItem(index: number) {
+    const optionElements = this._dropdownElement.querySelectorAll('li');
+    const newItemElement = optionElements[index];
 
     let scrollBottom: number;
     let elementBottom: number;
 
-    this._focusedItemIndex = index;
+    this._focusedOptionIndex = index;
 
-    if (currentItemElement) {
-      currentItemElement.setAttribute('aria-activedescendant', 'false');
-    }
+    if (newItemElement && this._listboxElement.scrollHeight > this._listboxElement.clientHeight) {
+      scrollBottom = this._listboxElement.clientHeight + this._listboxElement.scrollTop;
+      elementBottom = newItemElement.offsetTop + newItemElement.offsetHeight;
 
-    if (newItemElement) {
-      newItemElement.setAttribute('aria-activedescendant', 'true');
+      if (elementBottom > scrollBottom) {
+        this._listboxElement.scrollTop = elementBottom - this._listboxElement.clientHeight;
+      }
 
-      if (this._listboxElement.scrollHeight > this._listboxElement.clientHeight) {
-        scrollBottom = this._listboxElement.clientHeight + this._listboxElement.scrollTop;
-        elementBottom = newItemElement.offsetTop + newItemElement.offsetHeight;
-
-        if (elementBottom > scrollBottom) {
-          this._listboxElement.scrollTop = elementBottom - this._listboxElement.clientHeight;
-        }
-
-        else if (newItemElement.offsetTop < this._listboxElement.scrollTop) {
-          this._listboxElement.scrollTop = newItemElement.offsetTop;
-        }
+      else if (newItemElement.offsetTop < this._listboxElement.scrollTop) {
+        this._listboxElement.scrollTop = newItemElement.offsetTop;
       }
     }
   }
@@ -228,63 +256,31 @@ export class ComboBox {
     this._isExpanded = isExpanded;
   }
 
-  refreshField() {
-    const selectedItemElements = this._listboxElement.querySelectorAll('li[aria-selected="true"]');
+  toggleOption(option: ComboboxOption) {
+    const isSelected = this.checkSelectedState(option);
 
-    this._fieldElement.innerHTML = '';
-
-    if(!selectedItemElements.length) {
-      this._fieldElement.appendChild(this.createPlaceholder());
-      return;
+    if (isSelected) {
+      this.deselectOption(option);
+    } else {
+      this.selectOption(option);
     }
-
-    for (let i = 0; i < selectedItemElements.length; i++) {
-      this._fieldElement.appendChild(this.createTag(selectedItemElements[i]));
-    }
-  }
-
-  createPlaceholder() {
-    const placeholderElement = document.createElement('div');
-
-    placeholderElement.className = 'combobox-field-placeholder';
-    placeholderElement.textContent = this.placeholder;
-
-    return placeholderElement;
-  }
-
-  createTag(itemElement) {
-    const tagElement = document.createElement('div');
-    const contentElement = document.createElement('div');
-    const removeButtonElement = document.createElement('div');
-
-    tagElement.className = 'combobox-tag';
-
-    contentElement.className = 'combobox-tag-text';
-    contentElement.textContent = itemElement.textContent;
-
-    removeButtonElement.className = 'combobox-tag-remove-button';
-    removeButtonElement.addEventListener('click', this.removeTag.bind(this, itemElement));
-
-    tagElement.appendChild(contentElement);
-    tagElement.appendChild(removeButtonElement);
-
-    return tagElement;
-  }
-
-  removeTag(itemElement, event) {
-    this.toggleItem(itemElement);
-
-    event.stopPropagation();
-  }
-
-  toggleItem(itemElement) {
-    const isSelected = this.getItemSelectedState(itemElement);
-
-    itemElement.setAttribute('aria-selected', String(!isSelected));
 
     this.fireChangeEvent();
-    this.refreshField();
     this.collapse();
+  }
+
+  selectOption(option: ComboboxOption) {
+    this.value = [
+      ...this.value,
+      option
+    ];
+  }
+
+  deselectOption(option: ComboboxOption) {
+    const value = [...this.value];
+    const optionIndex = value.findIndex(selectedOption => selectedOption.value === option.value);
+
+    this.value = [...value.slice(0, optionIndex), ...value.slice(optionIndex + 1)];
   }
 
   fireChangeEvent() {
