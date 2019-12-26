@@ -25,7 +25,7 @@ const selectedOptions = [
 storiesOf('ComboBox', module)
   .addDecorator(withActions('my-change'))
   .addParameters({ jest: ['combobox'] })
-  .add('Default', () => {
+  .add('Single', () => {
     const el = document.createElement('my-combobox');
 
     el.options = options;
@@ -36,9 +36,34 @@ storiesOf('ComboBox', module)
       markdown: readme
     }
   })
-  .add('Filled', () => {
+  .add('Single Filled', () => {
     const el = document.createElement('my-combobox');
 
+    el.options = options;
+    el.selectedOptions = [selectedOptions[1]];
+
+    return el;
+  }, {
+    notes: {
+      markdown: readme
+    }
+  })
+  .add('Multiple', () => {
+    const el = document.createElement('my-combobox');
+
+    el.multiple = true;
+    el.options = options;
+
+    return el;
+  }, {
+    notes: {
+      markdown: readme
+    }
+  })
+  .add('Multiple Filled', () => {
+    const el = document.createElement('my-combobox');
+
+    el.multiple = true;
     el.options = options;
     el.selectedOptions = selectedOptions;
 

@@ -15,12 +15,15 @@ type ComboboxOption = {
 })
 export class ComboBox {
   private _fieldElement?: HTMLElement;
+  private _selectElement?: HTMLSelectElement;
   private _dropdownElement?: HTMLElement;
   private _listboxElement?: HTMLUListElement;
 
   @Element() el: HTMLElement;
 
   @Prop() placeholder: string = 'Select value';
+
+  @Prop() multiple: boolean = false;
 
   @Prop() disabled: boolean = false;
 
@@ -92,7 +95,7 @@ export class ComboBox {
           onClick={this.onFieldClick.bind(this)}
           tabIndex={0}
         >
-          {this.value.map(option => (
+          {this.multiple && this.value.map(option => (
             <div
               class='combobox-tag'
               data-value={option.value}
@@ -106,6 +109,10 @@ export class ComboBox {
               ></button>
             </div>
           ))}
+
+          {!this.multiple && this.value.length === 1 &&
+            <li>{this.value[0].text}</li>
+          }
           <li>
             {this.value.length === 0 &&
               this.placeholder
@@ -135,6 +142,21 @@ export class ComboBox {
             ))}
           </ul>
         </div>
+
+        <select
+          hidden={true}
+          multiple={this.multiple}
+          ref={el => this._selectElement = el as HTMLSelectElement}
+        >
+          {this.options.map(option => (
+            <option
+              value={option.value}
+              selected={this.checkSelectedState(option)}
+            >
+              {option.text}
+            </option>
+          ))}
+        </select>
       </div>
     );
   }
@@ -227,7 +249,7 @@ export class ComboBox {
   }
 
   focusOption(index: number) {
-    const optionElements = this._dropdownElement.querySelectorAll('li');
+    const optionElements = this._selectElement.options;
     const newOptionElement = optionElements[index];
 
     let scrollBottom: number;
@@ -256,6 +278,10 @@ export class ComboBox {
   toggleOption(option: ComboboxOption) {
     const isSelected = this.checkSelectedState(option);
 
+    if (this.multiple === false) {
+      this.clearSelection();
+    }
+
     if (isSelected) {
       this.deselectOption(option);
     } else {
@@ -278,6 +304,10 @@ export class ComboBox {
     const optionIndex = value.findIndex(selectedOption => selectedOption.value === option.value);
 
     this.value = [...value.slice(0, optionIndex), ...value.slice(optionIndex + 1)];
+  }
+
+  clearSelection() {
+    this.value = [];
   }
 
   fireChangeEvent() {
