@@ -102,7 +102,7 @@ export class ComboBox {
               </div>
               <button
                 class='combobox-tag-remove-button'
-                onClick={this.onListItemClick.bind(this, option)}
+                onClick={this.onOptionMouseDown.bind(this, option)}
               ></button>
             </div>
           ))}
@@ -128,7 +128,7 @@ export class ComboBox {
                 aria-selected={String(this.checkSelectedState(option))}
                 aria-activedescendant={String(this._focusedOptionIndex === index)}
                 data-value={option.value}
-                onClick={this.onListItemClick.bind(this, option)}
+                onMouseDown={this.onOptionMouseDown.bind(this, option)}
               >
                 {option.text}
               </li>
@@ -139,10 +139,6 @@ export class ComboBox {
     );
   }
 
-  getItemSelectedState(itemElement: HTMLElement) {
-    return itemElement.getAttribute('aria-selected') === 'true';
-  }
-
   checkSelectedState(option: ComboboxOption) {
     return this.value.some(selectedOption => selectedOption.value === option.value);
   }
@@ -151,9 +147,10 @@ export class ComboBox {
     this._isExpanded ? this.collapse() : this.expand();
   }
 
-  onListItemClick(option: ComboboxOption, event) {
-    event.preventDefault();
+  onOptionMouseDown(option: ComboboxOption, event) {
     event.stopPropagation();
+    event.stopImmediatePropagation();
+    event.preventDefault();
 
     this.toggleOption(option);
   }
@@ -199,7 +196,7 @@ export class ComboBox {
     const focusedOptionIndex = this._focusedOptionIndex + 1;
 
     if (focusedOptionIndex < this.options.length) {
-      this.focusItem(focusedOptionIndex);
+      this.focusOption(focusedOptionIndex);
     }
   }
 
@@ -207,7 +204,7 @@ export class ComboBox {
     const focusedOptionIndex = this._focusedOptionIndex - 1;
 
     if (focusedOptionIndex >= 0) {
-      this.focusItem(focusedOptionIndex);
+      this.focusOption(focusedOptionIndex);
     }
   }
 
@@ -218,7 +215,7 @@ export class ComboBox {
       this.togglePopup(true);
     }
 
-    this.focusItem(-1);
+    this.focusOption(-1);
   }
 
   collapse(shouldFocusField: boolean = true) {
@@ -229,25 +226,25 @@ export class ComboBox {
     }
   }
 
-  focusItem(index: number) {
+  focusOption(index: number) {
     const optionElements = this._dropdownElement.querySelectorAll('li');
-    const newItemElement = optionElements[index];
+    const newOptionElement = optionElements[index];
 
     let scrollBottom: number;
     let elementBottom: number;
 
     this._focusedOptionIndex = index;
 
-    if (newItemElement && this._listboxElement.scrollHeight > this._listboxElement.clientHeight) {
+    if (newOptionElement && this._listboxElement.scrollHeight > this._listboxElement.clientHeight) {
       scrollBottom = this._listboxElement.clientHeight + this._listboxElement.scrollTop;
-      elementBottom = newItemElement.offsetTop + newItemElement.offsetHeight;
+      elementBottom = newOptionElement.offsetTop + newOptionElement.offsetHeight;
 
       if (elementBottom > scrollBottom) {
         this._listboxElement.scrollTop = elementBottom - this._listboxElement.clientHeight;
       }
 
-      else if (newItemElement.offsetTop < this._listboxElement.scrollTop) {
-        this._listboxElement.scrollTop = newItemElement.offsetTop;
+      else if (newOptionElement.offsetTop < this._listboxElement.scrollTop) {
+        this._listboxElement.scrollTop = newOptionElement.offsetTop;
       }
     }
   }
