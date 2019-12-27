@@ -10,6 +10,9 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 
 
 export namespace Components {
+  interface MyChip {
+    'data': {};
+  }
   interface MyCombobox {
     'disabled': boolean;
     'multiple': boolean;
@@ -22,17 +25,28 @@ export namespace Components {
 declare global {
 
 
+  interface HTMLMyChipElement extends Components.MyChip, HTMLStencilElement {}
+  var HTMLMyChipElement: {
+    prototype: HTMLMyChipElement;
+    new (): HTMLMyChipElement;
+  };
+
   interface HTMLMyComboboxElement extends Components.MyCombobox, HTMLStencilElement {}
   var HTMLMyComboboxElement: {
     prototype: HTMLMyComboboxElement;
     new (): HTMLMyComboboxElement;
   };
   interface HTMLElementTagNameMap {
+    'my-chip': HTMLMyChipElement;
     'my-combobox': HTMLMyComboboxElement;
   }
 }
 
 declare namespace LocalJSX {
+  interface MyChip {
+    'data'?: {};
+    'onMy-chip-delete'?: (event: CustomEvent<any>) => void;
+  }
   interface MyCombobox {
     'disabled'?: boolean;
     'multiple'?: boolean;
@@ -43,6 +57,7 @@ declare namespace LocalJSX {
   }
 
   interface IntrinsicElements {
+    'my-chip': MyChip;
     'my-combobox': MyCombobox;
   }
 }
@@ -53,6 +68,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
+      'my-chip': LocalJSX.MyChip & JSXBase.HTMLAttributes<HTMLMyChipElement>;
       'my-combobox': LocalJSX.MyCombobox & JSXBase.HTMLAttributes<HTMLMyComboboxElement>;
     }
   }

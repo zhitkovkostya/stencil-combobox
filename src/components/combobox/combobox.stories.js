@@ -24,6 +24,7 @@ const selectedOptions = [
 
 storiesOf('ComboBox', module)
   .addDecorator(withActions('my-change'))
+  .addDecorator(withActions('my-chip-delete'))
   .addParameters({ jest: ['combobox'] })
   .add('Single', () => {
     const el = document.createElement('my-combobox');

@@ -2,7 +2,8 @@ import {Component, Element, Event, Prop, State, EventEmitter, h, Listen} from '@
 import uniqueId from 'lodash.uniqueid';
 import {isTouchCapable} from '../../utils/utils';
 
-type ComboboxOption = {
+
+interface ComboboxOption {
   text: string;
   value: string;
   selected: boolean;
@@ -16,7 +17,6 @@ type ComboboxOption = {
 export class ComboBox {
   private _fieldElement?: HTMLElement;
   private _selectElement?: HTMLSelectElement;
-  private _dropdownElement?: HTMLElement;
   private _listboxElement?: HTMLUListElement;
 
   @Element() el: HTMLElement;
@@ -73,6 +73,11 @@ export class ComboBox {
     }
   }
 
+  @Listen('my-chip-delete')
+  onChipDelete(event) {
+    debugger;
+    this.deselectOption(event.detail);
+  }
 
   componentWillLoad() {
     this.value = [
@@ -96,33 +101,24 @@ export class ComboBox {
           tabIndex={0}
         >
           {this.multiple && this.value.map(option => (
-            <div
-              class='combobox-tag'
-              data-value={option.value}
-            >
-              <div class='combobox-tag-text'>
+            <li>
+              <my-chip data={option}>
                 {option.text}
-              </div>
-              <button
-                class='combobox-tag-remove-button'
-                onClick={this.onOptionMouseDown.bind(this, option)}
-              ></button>
-            </div>
+              </my-chip>
+            </li>
           ))}
 
           {!this.multiple && this.value.length === 1 &&
             <li>{this.value[0].text}</li>
           }
-          <li>
-            {this.value.length === 0 &&
-              this.placeholder
-            }
-          </li>
+
+          {this.value.length === 0 &&
+            <li>
+              {this.placeholder}
+            </li>
+          }
         </div>
-        <div
-          class='combobox-dropdown'
-          ref={el => this._dropdownElement = el as HTMLElement}
-        >
+        <div class='combobox-dropdown'>
           <ul
             class='combobox-listbox'
             ref={el => this._listboxElement = el as HTMLUListElement}
@@ -145,6 +141,7 @@ export class ComboBox {
 
         <select
           hidden={true}
+          aria-hidden='true'
           multiple={this.multiple}
           ref={el => this._selectElement = el as HTMLSelectElement}
         >
@@ -288,7 +285,7 @@ export class ComboBox {
       this.selectOption(option);
     }
 
-    this.fireChangeEvent();
+    this.changeEvent.emit();
     this.collapse();
   }
 
@@ -309,8 +306,4 @@ export class ComboBox {
   clearSelection() {
     this.value = [];
   }
-
-  fireChangeEvent() {
-    this.changeEvent.emit();
-  };
 }
