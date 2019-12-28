@@ -7,13 +7,13 @@
 
 ## Properties
 
-| Property          | Attribute     | Description | Type               | Default          |
-| ----------------- | ------------- | ----------- | ------------------ | ---------------- |
-| `disabled`        | `disabled`    |             | `boolean`          | `false`          |
-| `multiple`        | `multiple`    |             | `boolean`          | `false`          |
-| `options`         | --            |             | `ComboboxOption[]` | `[]`             |
-| `placeholder`     | `placeholder` |             | `string`           | `'Select value'` |
-| `selectedOptions` | --            |             | `ComboboxOption[]` | `[]`             |
+| Property          | Attribute     | Description | Type      | Default          |
+| ----------------- | ------------- | ----------- | --------- | ---------------- |
+| `disabled`        | `disabled`    |             | `boolean` | `false`          |
+| `multiple`        | `multiple`    |             | `boolean` | `false`          |
+| `options`         | --            |             | `any[]`   | `[]`             |
+| `placeholder`     | `placeholder` |             | `string`  | `'Select value'` |
+| `selectedOptions` | --            |             | `any[]`   | `[]`             |
 
 
 ## Events

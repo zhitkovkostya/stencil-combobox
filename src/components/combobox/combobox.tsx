@@ -15,7 +15,7 @@ interface ComboboxOption {
   shadow: true
 })
 export class ComboBox {
-  private _fieldElement?: HTMLElement;
+  private _comboboxElement?: HTMLElement;
   private _selectElement?: HTMLSelectElement;
   private _listboxElement?: HTMLUListElement;
 
@@ -27,11 +27,11 @@ export class ComboBox {
 
   @Prop() disabled: boolean = false;
 
-  @Prop() options: Array<ComboboxOption> = [];
+  @Prop() options = [];
 
-  @Prop() selectedOptions: Array<ComboboxOption> = [];
+  @Prop() selectedOptions = [];
 
-  @State() value: Array<ComboboxOption> = [];
+  @State() value: ComboboxOption[] = [];
 
   @State() _isExpanded: boolean = false;
 
@@ -75,8 +75,8 @@ export class ComboBox {
 
   @Listen('my-chip-delete')
   onChipDelete(event) {
-    debugger;
     this.deselectOption(event.detail);
+    this.collapse(true);
   }
 
   componentWillLoad() {
@@ -91,30 +91,34 @@ export class ComboBox {
       <div
         id={uniqueId('combobox-')}
         class='combobox'
+        ref={el => this._comboboxElement = el as HTMLElement}
+        onClick={this.onClick.bind(this)}
         role='combobox'
         aria-expanded={String(this._isExpanded)}
+        tabIndex={0}
       >
-        <div
-          class='combobox-field'
-          ref={el => this._fieldElement = el as HTMLElement}
-          onClick={this.onFieldClick.bind(this)}
-          tabIndex={0}
-        >
+        <div class='combobox-field'>
           {this.multiple && this.value.map(option => (
             <li>
-              <my-chip data={option}>
+              <my-chip data={option} isDeletable={true}>
                 {option.text}
               </my-chip>
             </li>
           ))}
 
           {!this.multiple && this.value.length === 1 &&
-            <li>{this.value[0].text}</li>
+            <li>
+              <span class='combobox-placeholder'>
+                {this.value[0].text}
+              </span>
+            </li>
           }
 
           {this.value.length === 0 &&
             <li>
-              {this.placeholder}
+              <span class='combobox-placeholder'>
+                {this.placeholder}
+              </span>
             </li>
           }
         </div>
@@ -162,7 +166,7 @@ export class ComboBox {
     return this.value.some(selectedOption => selectedOption.value === option.value);
   }
 
-  onFieldClick() {
+  onClick() {
     this._isExpanded ? this.collapse() : this.expand();
   }
 
@@ -241,7 +245,7 @@ export class ComboBox {
     this.togglePopup(false);
 
     if (shouldFocusField) {
-      this._fieldElement.focus();
+      this._comboboxElement.focus();
     }
   }
 

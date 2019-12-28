@@ -1,6 +1,13 @@
 .combobox {
   position: relative;
   box-sizing: border-box;
+  min-height: 48px;
+  box-shadow: 0 1px rgba(0, 0, 0, .12);
+}
+
+.combobox:focus {
+  box-shadow: 0 2px rgb(16, 108, 200);
+  outline: none;
 }
 
 .combobox[aria-expanded="false"] .combobox-dropdown {
@@ -12,15 +19,9 @@
   display: flex;
   flex-wrap: wrap;
   padding: .25em .25em 0 .25em;
-  box-shadow: 0 1px rgba(0, 0, 0, .12);
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
-}
-
-.combobox-field:focus {
-  box-shadow: 0 2px rgb(16, 108, 200);
-  outline: none;
 }
 
 .combobox-field li {
@@ -30,6 +31,10 @@
 
 .combobox-field li:first-child {
   margin-left: 0;
+}
+
+.combobox-placeholder {
+  line-height: 2.3;
 }
 
 .combobox-dropdown {
