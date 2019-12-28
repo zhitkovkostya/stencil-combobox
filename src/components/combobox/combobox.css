@@ -24,17 +24,22 @@
   user-select: none;
 }
 
-.combobox-field li {
+.combobox-chips {
+  margin: 0;
+  padding: 0;
+}
+
+.combobox-chip {
   margin: .25em;
   list-style: none;
 }
 
-.combobox-field li:first-child {
+.combobox-chip:first-child {
   margin-left: 0;
 }
 
 .combobox-placeholder {
-  line-height: 2.3;
+  line-height: 2.8;
 }
 
 .combobox-dropdown {

@@ -99,27 +99,25 @@ export class ComboBox {
       >
         <div class='combobox-field'>
           {this.multiple && this.value.map(option => (
-            <li>
-              <my-chip data={option} isDeletable={true}>
-                {option.text}
-              </my-chip>
-            </li>
+            <ul class='combobox-chips'>
+              <li class='combobox-chip'>
+                <my-chip data={option} isDeletable={true}>
+                  {option.text}
+                </my-chip>
+              </li>
+            </ul>
           ))}
 
           {!this.multiple && this.value.length === 1 &&
-            <li>
-              <span class='combobox-placeholder'>
-                {this.value[0].text}
-              </span>
-            </li>
+            <span class='combobox-placeholder'>
+              {this.value[0].text}
+            </span>
           }
 
           {this.value.length === 0 &&
-            <li>
-              <span class='combobox-placeholder'>
-                {this.placeholder}
-              </span>
-            </li>
+            <span class='combobox-placeholder'>
+              {this.placeholder}
+            </span>
           }
         </div>
         <div class='combobox-dropdown'>
