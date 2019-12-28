@@ -121,6 +121,7 @@ export class ComboBox {
         role='combobox'
         aria-haspopup='listbox'
         aria-owns={this.id + '-listbox'}
+        aria-controls={this.id + '-listbox'}
         aria-expanded={String(this.isExpanded)}
         aria-disabled={String(this.isDisabled)}
         tabIndex={0}
@@ -148,6 +149,8 @@ export class ComboBox {
             ref={el => this._searchElement = el as HTMLInputElement}
             value={this.searchText}
             tabIndex={-1}
+            autoComplete='off'
+            aria-autocomplete='list'
             onKeyPress={this.onSearchFieldKeyPress.bind(this)}
             onKeyUp={this.onSearchFieldKeyUp.bind(this)}
           />
