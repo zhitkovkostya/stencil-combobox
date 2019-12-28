@@ -27,9 +27,9 @@ export class ComboBox {
 
   @Prop() placeholder: string = 'Select value';
 
-  @Prop() multiple: boolean = false;
+  @Prop({attribute: 'multiple'}) isMultiple: boolean = false;
 
-  @Prop() disabled: boolean = false;
+  @Prop({attribute: 'disabled'}) isDisabled: boolean = false;
 
   @Prop({attribute: 'options'}) defaultOptions = [];
 
@@ -107,11 +107,18 @@ export class ComboBox {
     return (
       <div
         id={this.id}
-        class={{'combobox': true, 'combobox-focused': this.isFocused}}
+        class={{
+          'combobox': true,
+          'combobox-focused': this.isFocused,
+          'combobox-disabled': this.isDisabled,
+        }}
         ref={el => this._comboboxElement = el as HTMLElement}
         onFocus={this.onFocus.bind(this)}
         role='combobox'
+        aria-haspopup='true'
+        aria-owns={this.id + '-listbox'}
         aria-expanded={String(this.isExpanded)}
+        aria-disabled={String(this.isDisabled)}
         tabIndex={0}
       >
         <div
@@ -119,14 +126,14 @@ export class ComboBox {
           ref={el => this._fieldElement = el as HTMLElement}
           onClick={this.onFieldClick.bind(this)}
         >
-          {this.multiple && this.value.map(option => (
+          {this.isMultiple && this.value.map(option => (
             <my-chip data={option} deletable>
               {option.text}
             </my-chip>
           ))}
 
 
-          {!this.multiple && this.value.length > 0 && this.searchText.length === 0 &&
+          {!this.isMultiple && this.value.length > 0 && this.searchText.length === 0 &&
             <span class='combobox-placeholder'>{this.value[0].text}</span>
           }
 
@@ -142,35 +149,37 @@ export class ComboBox {
             onKeyUp={this.onSearchFieldKeyUp.bind(this)}
           />
         </div>
-        <div class='combobox-dropdown'>
-          <ul
-            class='combobox-listbox'
-            ref={el => this._listboxElement = el as HTMLUListElement}
-            role='listbox'
-          >
-            {this.options.map((option, index) => (
-              <li
-                class='combobox-option'
-                role='option'
-                aria-selected={String(this.checkSelectedState(option))}
-                aria-activedescendant={String(this.focusedOptionIndex === index)}
-                data-value={option.value}
-                onClick={this.onOptionClick.bind(this, option)}
-              >
-                {option.text}
-              </li>
-            ))}
+        <ul
+          id={this.id + '-listbox'}
+          class='combobox-listbox'
+          ref={el => this._listboxElement = el as HTMLUListElement}
+          role='listbox'
+          aria-multiselectable='true'
+        >
+          {this.options.map((option, index) => (
+            <li
+              class='combobox-option'
+              role='option'
+              aria-selected={String(this.checkSelectedState(option))}
+              aria-activedescendant={String(this.focusedOptionIndex === index)}
+              data-value={option.value}
+              onClick={this.onOptionClick.bind(this, option)}
+            >
+              {option.text}
+            </li>
+          ))}
 
-            {this.options.length === 0 &&
-              <li class='combobox-option'>No options available</li>
-            }
-          </ul>
-        </div>
+          {this.options.length === 0 &&
+            <li class='combobox-option'>No options available</li>
+          }
+        </ul>
 
         <select
           hidden={true}
+          disabled={this.isDisabled}
+          multiple={this.isMultiple}
           aria-hidden='true'
-          multiple={this.multiple}
+          aria-disabled={String(this.isDisabled)}
           ref={el => this._selectElement = el as HTMLSelectElement}
         >
           {this.options.map(option => (
@@ -337,7 +346,7 @@ export class ComboBox {
   toggleOption(option: ComboboxOption) {
     const isSelected = this.checkSelectedState(option);
 
-    if (this.multiple === false) {
+    if (this.isMultiple === false) {
       this.clearSelection();
     }
 

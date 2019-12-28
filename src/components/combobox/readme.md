@@ -10,8 +10,8 @@
 | Property          | Attribute     | Description | Type      | Default          |
 | ----------------- | ------------- | ----------- | --------- | ---------------- |
 | `defaultOptions`  | --            |             | `any[]`   | `[]`             |
-| `disabled`        | `disabled`    |             | `boolean` | `false`          |
-| `multiple`        | `multiple`    |             | `boolean` | `false`          |
+| `isDisabled`      | `disabled`    |             | `boolean` | `false`          |
+| `isMultiple`      | `multiple`    |             | `boolean` | `false`          |
 | `placeholder`     | `placeholder` |             | `string`  | `'Select value'` |
 | `selectedOptions` | --            |             | `any[]`   | `[]`             |
 

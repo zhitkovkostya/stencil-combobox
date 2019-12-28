@@ -52,7 +52,7 @@ storiesOf('ComboBox', module)
   .add('Multiple', () => {
     const el = document.createElement('my-combobox');
 
-    el.multiple = true;
+    el.isMultiple = true;
     el.defaultOptions = options;
 
     return el;
@@ -64,7 +64,7 @@ storiesOf('ComboBox', module)
   .add('Multiple Filled', () => {
     const el = document.createElement('my-combobox');
 
-    el.multiple = true;
+    el.isMultiple = true;
     el.defaultOptions = options;
     el.selectedOptions = selectedOptions;
 

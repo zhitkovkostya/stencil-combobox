@@ -16,8 +16,8 @@ export namespace Components {
   }
   interface MyCombobox {
     'defaultOptions': any[];
-    'disabled': boolean;
-    'multiple': boolean;
+    'isDisabled': boolean;
+    'isMultiple': boolean;
     'placeholder': string;
     'selectedOptions': any[];
   }
@@ -51,8 +51,8 @@ declare namespace LocalJSX {
   }
   interface MyCombobox {
     'defaultOptions'?: any[];
-    'disabled'?: boolean;
-    'multiple'?: boolean;
+    'isDisabled'?: boolean;
+    'isMultiple'?: boolean;
     'onMy-change'?: (event: CustomEvent<any>) => void;
     'placeholder'?: string;
     'selectedOptions'?: any[];
