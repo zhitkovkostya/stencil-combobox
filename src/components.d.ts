@@ -18,6 +18,7 @@ export namespace Components {
     'defaultOptions': any[];
     'isDisabled': boolean;
     'isMultiple': boolean;
+    'isOrdered': boolean;
     'placeholder': string;
     'selectedOptions': any[];
   }
@@ -53,6 +54,7 @@ declare namespace LocalJSX {
     'defaultOptions'?: any[];
     'isDisabled'?: boolean;
     'isMultiple'?: boolean;
+    'isOrdered'?: boolean;
     'onMy-change'?: (event: CustomEvent<any>) => void;
     'placeholder'?: string;
     'selectedOptions'?: any[];

@@ -31,6 +31,8 @@ export class ComboBox {
 
   @Prop({attribute: 'disabled'}) isDisabled: boolean = false;
 
+  @Prop({attribute: 'ordered'}) isOrdered: boolean = false;
+
   @Prop({attribute: 'options'}) defaultOptions = [];
 
   @Prop() selectedOptions = [];
@@ -101,6 +103,10 @@ export class ComboBox {
       ...this.options,
       ...this.defaultOptions
     ];
+
+    if (this.isOrdered) {
+      this.sortOptions();
+    }
   }
 
   render() {
@@ -364,6 +370,10 @@ export class ComboBox {
       ...this.value,
       option
     ];
+
+    if (this.isOrdered) {
+      this.sortOptions();
+    }
   }
 
   deselectOption(option: ComboboxOption) {
@@ -371,6 +381,10 @@ export class ComboBox {
     const optionIndex = value.findIndex(selectedOption => selectedOption.value === option.value);
 
     this.value = [...value.slice(0, optionIndex), ...value.slice(optionIndex + 1)];
+  }
+
+  sortOptions() {
+    this.value.sort((a, b) => a.text.localeCompare(b.text));
   }
 
   clearSelection() {

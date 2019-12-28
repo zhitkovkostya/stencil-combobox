@@ -100,6 +100,20 @@ storiesOf('ComboBox', module)
     notes: {
       markdown: readme
     }
+  })
+  .add('Multiple Filled Sorted', () => {
+    const el = document.createElement('my-combobox');
+
+    el.isMultiple = true;
+    el.isOrdered = true;
+    el.defaultOptions = options;
+    el.selectedOptions = [selectedOptions[1], selectedOptions[0]];
+
+    return el;
+  }, {
+    notes: {
+      markdown: readme
+    }
   });
 
 

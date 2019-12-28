@@ -12,6 +12,7 @@
 | `defaultOptions`  | --            |             | `any[]`   | `[]`             |
 | `isDisabled`      | `disabled`    |             | `boolean` | `false`          |
 | `isMultiple`      | `multiple`    |             | `boolean` | `false`          |
+| `isOrdered`       | `ordered`     |             | `boolean` | `false`          |
 | `placeholder`     | `placeholder` |             | `string`  | `'Select value'` |
 | `selectedOptions` | --            |             | `any[]`   | `[]`             |
 
