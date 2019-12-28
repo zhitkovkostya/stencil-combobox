@@ -305,7 +305,7 @@ export class ComboBox {
       this.expand();
     }
 
-    this.focusOption(focusedOptionIndex);
+    setTimeout(this.focusOption.bind(this, focusedOptionIndex), 0);
   }
 
   focus() {
