@@ -125,21 +125,13 @@ export class ComboBox {
             </my-chip>
           ))}
 
-          {!this.multiple && this.value.length === 1 &&
-            <span class='combobox-placeholder'>
-              {this.value[0].text}
-            </span>
-          }
-
-          {this.value.length === 0 &&
-            <span class='combobox-placeholder'>
-              {this.placeholder}
-            </span>
-          }
-
           <input
             type='text'
-            size={this.searchText.length + 1}
+            size={this.searchText.length || this.placeholder.length}
+            placeholder={this.value.length > 0
+              ? this.multiple ? '' : this.value[0].text
+              : this.placeholder
+            }
             class='combobox-input'
             ref={el => this._inputElement = el as HTMLInputElement}
             tabIndex={-1}
