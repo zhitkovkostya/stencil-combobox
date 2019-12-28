@@ -18,7 +18,6 @@ export class ComboBox {
   private _comboboxElement: HTMLElement;
   private _listboxElement: HTMLUListElement;
   private _fieldElement: HTMLElement;
-  private _selectElement: HTMLSelectElement;
   private _searchElement: HTMLInputElement;
 
   id = uniqueId('combobox-');
@@ -124,6 +123,7 @@ export class ComboBox {
         aria-owns={this.id + '-listbox'}
         aria-expanded={String(this.isExpanded)}
         aria-disabled={String(this.isDisabled)}
+        aria-activedescendant={this.isExpanded ? this.id + '-option-' + this.options[this.focusedOptionIndex].value : null}
         tabIndex={0}
       >
         <div
@@ -162,11 +162,13 @@ export class ComboBox {
         >
           {this.options.map((option, index) => (
             <li
-              class='combobox-option'
+              id={this.id + '-option-' + option.value}
+              class={{
+                'combobox-option': true,
+                'combobox-option-focused': this.focusedOptionIndex === index
+              }}
               role='option'
               aria-selected={String(this.checkSelectedState(option))}
-              aria-activedescendant={String(this.focusedOptionIndex === index)}
-              data-value={option.value}
               onClick={this.onOptionClick.bind(this, option)}
             >
               {option.text}
@@ -184,7 +186,6 @@ export class ComboBox {
           multiple={this.isMultiple}
           aria-hidden='true'
           aria-disabled={String(this.isDisabled)}
-          ref={el => this._selectElement = el as HTMLSelectElement}
         >
           {this.options.map(option => (
             <option
