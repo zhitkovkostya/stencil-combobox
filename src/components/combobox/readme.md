@@ -9,9 +9,9 @@
 
 | Property          | Attribute     | Description | Type      | Default          |
 | ----------------- | ------------- | ----------- | --------- | ---------------- |
+| `defaultOptions`  | --            |             | `any[]`   | `[]`             |
 | `disabled`        | `disabled`    |             | `boolean` | `false`          |
 | `multiple`        | `multiple`    |             | `boolean` | `false`          |
-| `options`         | --            |             | `any[]`   | `[]`             |
 | `placeholder`     | `placeholder` |             | `string`  | `'Select value'` |
 | `selectedOptions` | --            |             | `any[]`   | `[]`             |
 

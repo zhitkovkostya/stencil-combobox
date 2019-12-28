@@ -14,9 +14,9 @@ export namespace Components {
     'data': {};
   }
   interface MyCombobox {
+    'defaultOptions': any[];
     'disabled': boolean;
     'multiple': boolean;
-    'options': any[];
     'placeholder': string;
     'selectedOptions': any[];
   }
@@ -48,10 +48,10 @@ declare namespace LocalJSX {
     'onMy-chip-delete'?: (event: CustomEvent<any>) => void;
   }
   interface MyCombobox {
+    'defaultOptions'?: any[];
     'disabled'?: boolean;
     'multiple'?: boolean;
     'onMy-change'?: (event: CustomEvent<any>) => void;
-    'options'?: any[];
     'placeholder'?: string;
     'selectedOptions'?: any[];
   }

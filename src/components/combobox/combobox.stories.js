@@ -29,7 +29,7 @@ storiesOf('ComboBox', module)
   .add('Single', () => {
     const el = document.createElement('my-combobox');
 
-    el.options = options;
+    el.defaultOptions = options;
 
     return el;
   }, {
@@ -40,7 +40,7 @@ storiesOf('ComboBox', module)
   .add('Single Filled', () => {
     const el = document.createElement('my-combobox');
 
-    el.options = options;
+    el.defaultOptions = options;
     el.selectedOptions = [selectedOptions[1]];
 
     return el;
@@ -53,7 +53,7 @@ storiesOf('ComboBox', module)
     const el = document.createElement('my-combobox');
 
     el.multiple = true;
-    el.options = options;
+    el.defaultOptions = options;
 
     return el;
   }, {
@@ -65,7 +65,7 @@ storiesOf('ComboBox', module)
     const el = document.createElement('my-combobox');
 
     el.multiple = true;
-    el.options = options;
+    el.defaultOptions = options;
     el.selectedOptions = selectedOptions;
 
     return el;
