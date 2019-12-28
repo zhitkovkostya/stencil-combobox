@@ -274,6 +274,7 @@ export class ComboBox {
   onEscapeKeyDown() {
     this.collapse();
     this.focus();
+    this.clearSearch();
   }
 
   onArrowDownKeyDown(event) {
@@ -368,7 +369,7 @@ export class ComboBox {
       this.selectOption(option);
     }
 
-    this.searchText = '';
+    this.clearSearch()
 
     this.changeEvent.emit();
   }
@@ -397,5 +398,9 @@ export class ComboBox {
 
   clearSelection() {
     this.value = [];
+  }
+
+  clearSearch() {
+    this.searchText = '';
   }
 }

@@ -22,7 +22,7 @@
   overflow: hidden;
   display: flex;
   flex-wrap: wrap;
-  padding: .25em .25em 0 .25em;
+  padding: .5em .25em 0 .25em;
   cursor: text;
   -webkit-user-select: none;
   user-select: none;
