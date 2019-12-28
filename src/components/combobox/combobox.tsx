@@ -139,7 +139,6 @@ export class ComboBox {
 
           <input
             type='text'
-            size={this.searchText.length || this.placeholder.length}
             placeholder={this.value.length > 0 ? '' : this.placeholder}
             class='combobox-search'
             ref={el => this._searchElement = el as HTMLInputElement}

@@ -42,6 +42,7 @@
 }
 
 .combobox-search {
+  flex: auto;
   max-width: 100%;
   border: none;
   outline: none;
