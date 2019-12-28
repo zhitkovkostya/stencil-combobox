@@ -33,16 +33,17 @@
   margin-left: 0;
 }
 
-.combobox-input {
+.combobox-placeholder,
+.combobox-search {
   line-height: 2.8;
+  font-size: .8125rem;
+  font-family: var(--font-family);
 }
 
-.combobox-input {
+.combobox-search {
   max-width: 100%;
   border: none;
   outline: none;
-  font-family: var(--font-family);
-  font-size: .8125rem;
 }
 
 .combobox-dropdown {

@@ -19,7 +19,7 @@ export class ComboBox {
   private _listboxElement: HTMLUListElement;
   private _fieldElement: HTMLElement;
   private _selectElement: HTMLSelectElement;
-  private _inputElement: HTMLInputElement;
+  private _searchElement: HTMLInputElement;
 
   id = uniqueId('combobox-');
 
@@ -125,16 +125,20 @@ export class ComboBox {
             </my-chip>
           ))}
 
+
+          {!this.multiple && this.value.length > 0 && this.searchText.length === 0 &&
+            <span class='combobox-placeholder'>{this.value[0].text}</span>
+          }
+
           <input
             type='text'
             size={this.searchText.length || this.placeholder.length}
-            placeholder={this.value.length > 0
-              ? this.multiple ? '' : this.value[0].text
-              : this.placeholder
-            }
-            class='combobox-input'
-            ref={el => this._inputElement = el as HTMLInputElement}
+            placeholder={this.value.length > 0 ? '' : this.placeholder}
+            class='combobox-search'
+            ref={el => this._searchElement = el as HTMLInputElement}
+            value={this.searchText}
             tabIndex={-1}
+            onKeyPress={this.onSearchFieldKeyPress.bind(this)}
             onKeyUp={this.onSearchFieldKeyUp.bind(this)}
           />
         </div>
@@ -151,7 +155,7 @@ export class ComboBox {
                 aria-selected={String(this.checkSelectedState(option))}
                 aria-activedescendant={String(this.focusedOptionIndex === index)}
                 data-value={option.value}
-                onMouseDown={this.onOptionMouseDown.bind(this, option)}
+                onClick={this.onOptionClick.bind(this, option)}
               >
                 {option.text}
               </li>
@@ -195,22 +199,26 @@ export class ComboBox {
     this.focus();
   }
 
-  onSearchFieldKeyUp(event) {
-    this.searchText = event.target.value.toLowerCase();
-
-    if (!this.isExpanded) {
+  onSearchFieldKeyPress(event) {
+    if (event.code !== 'Enter' && !this.isExpanded) {
       this.expand();
     }
-
-    this.options = this.defaultOptions.filter(option => option.text.toLowerCase().includes(this.searchText));
   }
 
-  onOptionMouseDown(option: ComboboxOption, event) {
+  onSearchFieldKeyUp(event) {
+    this.searchText = event.target.value;
+
+    this.options = this.defaultOptions.filter(option => option.text.toLowerCase().includes(this.searchText.toLowerCase()));
+  }
+
+  onOptionClick(option: ComboboxOption, event) {
     event.stopPropagation();
     event.stopImmediatePropagation();
     event.preventDefault();
 
     this.toggleOption(option);
+    this.collapse();
+    this.focus();
   }
 
   onBackspaceKeyDown() {
@@ -229,13 +237,14 @@ export class ComboBox {
     if (this.isExpanded) {
       if (focusedOption) {
         this.toggleOption(focusedOption);
-      } else {
-        this.collapse();
-        this.focus();
       }
+
+      this.collapse();
     } else {
       this.expand();
     }
+
+    this.focus();
   }
 
   onSpaceKeyDown() {
@@ -276,11 +285,12 @@ export class ComboBox {
 
   focus() {
     this.isFocused = true;
-    this._inputElement.focus();
+    this._searchElement.focus();
   }
 
   blur() {
     this.isFocused = false;
+    this._searchElement.blur();
   }
 
   expand() {
@@ -337,11 +347,9 @@ export class ComboBox {
       this.selectOption(option);
     }
 
-    this._inputElement.value = '';
+    this.searchText = '';
 
     this.changeEvent.emit();
-    this.collapse();
-    this.focus();
   }
 
   selectOption(option: ComboboxOption) {
