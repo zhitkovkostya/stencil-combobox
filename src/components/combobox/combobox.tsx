@@ -279,21 +279,31 @@ export class ComboBox {
   onArrowDownKeyDown(event) {
     event.preventDefault();
 
-    const focusedOptionIndex = this.focusedOptionIndex + 1;
+    const expectedIndex = this.focusedOptionIndex + 1;
+    const maxIndex = this.options.length;
+    const minIndex = 0;
+    const focusedOptionIndex = expectedIndex === maxIndex ? minIndex : expectedIndex;
 
-    if (focusedOptionIndex < this.options.length) {
+    if (this.isExpanded) {
       this.focusOption(focusedOptionIndex);
+    } else {
+      this.expand();
     }
   }
 
   onArrowUpKeyDown(event) {
     event.preventDefault();
 
-    const focusedOptionIndex = this.focusedOptionIndex - 1;
+    const expectedIndex = this.focusedOptionIndex - 1;
+    const maxIndex = this.options.length - 1;
+    const minIndex = 0;
+    const focusedOptionIndex = expectedIndex < minIndex ? maxIndex : expectedIndex;
 
-    if (focusedOptionIndex >= 0) {
-      this.focusOption(focusedOptionIndex);
+    if (!this.isExpanded) {
+      this.expand();
     }
+
+    this.focusOption(focusedOptionIndex);
   }
 
   focus() {
@@ -311,17 +321,17 @@ export class ComboBox {
       // TODO: display native option list
     } else {
       this.togglePopup(true);
+      this.focusOption(0);
     }
-
-    this.focusOption(0);
   }
 
   collapse() {
+    this._listboxElement.scrollTop = 0;
     this.togglePopup(false);
   }
 
   focusOption(index: number) {
-    const optionElements = this._selectElement.options;
+    const optionElements = this._listboxElement.querySelectorAll('.combobox-option') as NodeListOf<HTMLElement>;
     const newOptionElement = optionElements[index];
 
     let scrollBottom: number;
@@ -335,9 +345,7 @@ export class ComboBox {
 
       if (elementBottom > scrollBottom) {
         this._listboxElement.scrollTop = elementBottom - this._listboxElement.clientHeight;
-      }
-
-      else if (newOptionElement.offsetTop < this._listboxElement.scrollTop) {
+      } else if (newOptionElement.offsetTop < this._listboxElement.scrollTop) {
         this._listboxElement.scrollTop = newOptionElement.offsetTop;
       }
     }
