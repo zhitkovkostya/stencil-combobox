@@ -119,11 +119,10 @@ export class ComboBox {
         ref={el => this._comboboxElement = el as HTMLElement}
         onFocus={this.onFocus.bind(this)}
         role='combobox'
-        aria-haspopup='true'
+        aria-haspopup='listbox'
         aria-owns={this.id + '-listbox'}
         aria-expanded={String(this.isExpanded)}
         aria-disabled={String(this.isDisabled)}
-        aria-activedescendant={this.focusedOptionIndex !== null && (this.id + '-option-' + this.options[this.focusedOptionIndex].value)}
         tabIndex={0}
       >
         <div
@@ -158,7 +157,8 @@ export class ComboBox {
           class='combobox-listbox'
           ref={el => this._listboxElement = el as HTMLUListElement}
           role='listbox'
-          aria-multiselectable='true'
+          aria-multiselectable={String(this.isMultiple)}
+          aria-activedescendant={this.focusedOptionIndex !== null && (this.id + '-option-' + this.options[this.focusedOptionIndex].value)}
         >
           {this.options.map((option, index) => (
             <li
