@@ -123,7 +123,7 @@ export class ComboBox {
         aria-owns={this.id + '-listbox'}
         aria-expanded={String(this.isExpanded)}
         aria-disabled={String(this.isDisabled)}
-        aria-activedescendant={this.isExpanded ? this.id + '-option-' + this.options[this.focusedOptionIndex].value : null}
+        aria-activedescendant={this.focusedOptionIndex !== null && (this.id + '-option-' + this.options[this.focusedOptionIndex].value)}
         tabIndex={0}
       >
         <div
@@ -330,6 +330,7 @@ export class ComboBox {
   collapse() {
     this._listboxElement.scrollTop = 0;
     this.togglePopup(false);
+    this.focusOption(null);
   }
 
   focusOption(index: number) {
