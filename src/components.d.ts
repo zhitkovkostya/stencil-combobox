@@ -12,6 +12,7 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 export namespace Components {
   interface MyChip {
     'data': {};
+    'isDeletable': boolean;
   }
   interface MyCombobox {
     'defaultOptions': any[];
@@ -45,6 +46,7 @@ declare global {
 declare namespace LocalJSX {
   interface MyChip {
     'data'?: {};
+    'isDeletable'?: boolean;
     'onMy-chip-delete'?: (event: CustomEvent<any>) => void;
   }
   interface MyCombobox {

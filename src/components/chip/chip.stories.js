@@ -16,6 +16,18 @@ storiesOf('Chip', module)
     notes: {
       markdown: readme
     }
+  })
+  .add('Deletable', () => {
+    const el = document.createElement('my-chip');
+
+    el.innerText = 'Chip';
+    el.isDeletable = true;
+
+    return el;
+  }, {
+    notes: {
+      markdown: readme
+    }
   });
 
 

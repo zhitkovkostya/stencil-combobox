@@ -120,7 +120,7 @@ export class ComboBox {
           onClick={this.onFieldClick.bind(this)}
         >
           {this.multiple && this.value.map(option => (
-            <my-chip data={option} isDeletable={true}>
+            <my-chip data={option} deletable>
               {option.text}
             </my-chip>
           ))}

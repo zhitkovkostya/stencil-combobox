@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type | Default |
-| -------- | --------- | ----------- | ---- | ------- |
-| `data`   | --        |             | `{}` | `{}`    |
+| Property      | Attribute   | Description | Type      | Default |
+| ------------- | ----------- | ----------- | --------- | ------- |
+| `data`        | --          |             | `{}`      | `{}`    |
+| `isDeletable` | `deletable` |             | `boolean` | `false` |
 
 
 ## Events
