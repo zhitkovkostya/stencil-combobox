@@ -49,6 +49,19 @@ storiesOf('ComboBox', module)
       markdown: readme
     }
   })
+  .add('Single Filled Disabled', () => {
+    const el = document.createElement('my-combobox');
+
+    el.isDisabled = true;
+    el.defaultOptions = options;
+    el.selectedOptions = [selectedOptions[1]];
+
+    return el;
+  }, {
+    notes: {
+      markdown: readme
+    }
+  })
   .add('Multiple', () => {
     const el = document.createElement('my-combobox');
 
@@ -65,6 +78,20 @@ storiesOf('ComboBox', module)
     const el = document.createElement('my-combobox');
 
     el.isMultiple = true;
+    el.defaultOptions = options;
+    el.selectedOptions = selectedOptions;
+
+    return el;
+  }, {
+    notes: {
+      markdown: readme
+    }
+  })
+  .add('Multiple Filled Disabled', () => {
+    const el = document.createElement('my-combobox');
+
+    el.isMultiple = true;
+    el.isDisabled = true;
     el.defaultOptions = options;
     el.selectedOptions = selectedOptions;
 

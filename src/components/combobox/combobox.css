@@ -9,6 +9,10 @@
   display: none;
 }
 
+.combobox[aria-disabled="true"] {
+  pointer-events: none;
+}
+
 .combobox-focused {
   box-shadow: 0 2px rgb(16, 108, 200);
   outline: none;
@@ -42,7 +46,7 @@
 }
 
 .combobox-search {
-  flex: auto;
+  flex: 1 1 16px;
   max-width: 100%;
   border: none;
   outline: none;

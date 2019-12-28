@@ -45,7 +45,7 @@ export class ComboBox {
 
   @State() isFocused: boolean = false;
 
-  @State() focusedOptionIndex: number = -1;
+  @State() focusedOptionIndex: number = 0;
 
   @Event({eventName: 'my-change'}) changeEvent: EventEmitter;
 
@@ -109,8 +109,7 @@ export class ComboBox {
         id={this.id}
         class={{
           'combobox': true,
-          'combobox-focused': this.isFocused,
-          'combobox-disabled': this.isDisabled,
+          'combobox-focused': this.isFocused
         }}
         ref={el => this._comboboxElement = el as HTMLElement}
         onFocus={this.onFocus.bind(this)}
@@ -127,7 +126,7 @@ export class ComboBox {
           onClick={this.onFieldClick.bind(this)}
         >
           {this.isMultiple && this.value.map(option => (
-            <my-chip data={option} deletable>
+            <my-chip data={option} deletable={!this.isDisabled}>
               {option.text}
             </my-chip>
           ))}
@@ -308,7 +307,7 @@ export class ComboBox {
       this.togglePopup(true);
     }
 
-    this.focusOption(-1);
+    this.focusOption(0);
   }
 
   collapse() {
