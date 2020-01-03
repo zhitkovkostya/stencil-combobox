@@ -13,6 +13,10 @@
   --color-blue-1: rgba(var(--color-blue), 100%);
   --color-blue-6: rgba(var(--color-blue), 16.66%);
 
+  --color-red: 245, 36, 25;
+  --color-red-1: rgba(var(--color-red), 100%);
+  --color-red-6: rgba(var(--color-red), 16.66%);
+
   --shadow: 0 .5em 1em rgba(var(--color-gray), .25);
 }
 
@@ -27,6 +31,6 @@
 
 body {
   font: 16px/1.5 var(--font-family);
-  color: #727272;
+  color: var(--color-gray-1);
   font-weight: 400;
 }

@@ -20,12 +20,9 @@ export namespace Components {
     'isDisabled': boolean;
     'isMultiple': boolean;
     'isOrdered': boolean;
+    'isRequired': boolean;
     'label': string;
     'placeholder': string;
-  }
-  interface MyFormControl {
-    'id': string;
-    'label': string;
   }
 }
 
@@ -43,16 +40,9 @@ declare global {
     prototype: HTMLMyComboboxElement;
     new (): HTMLMyComboboxElement;
   };
-
-  interface HTMLMyFormControlElement extends Components.MyFormControl, HTMLStencilElement {}
-  var HTMLMyFormControlElement: {
-    prototype: HTMLMyFormControlElement;
-    new (): HTMLMyFormControlElement;
-  };
   interface HTMLElementTagNameMap {
     'my-chip': HTMLMyChipElement;
     'my-combobox': HTMLMyComboboxElement;
-    'my-form-control': HTMLMyFormControlElement;
   }
 }
 
@@ -67,20 +57,15 @@ declare namespace LocalJSX {
     'isDisabled'?: boolean;
     'isMultiple'?: boolean;
     'isOrdered'?: boolean;
+    'isRequired'?: boolean;
     'label'?: string;
     'onMy-change'?: (event: CustomEvent<any>) => void;
     'placeholder'?: string;
-  }
-  interface MyFormControl {
-    'id'?: string;
-    'label'?: string;
-    'onMy-label-click'?: (event: CustomEvent<any>) => void;
   }
 
   interface IntrinsicElements {
     'my-chip': MyChip;
     'my-combobox': MyCombobox;
-    'my-form-control': MyFormControl;
   }
 }
 
@@ -92,7 +77,6 @@ declare module "@stencil/core" {
     interface IntrinsicElements {
       'my-chip': LocalJSX.MyChip & JSXBase.HTMLAttributes<HTMLMyChipElement>;
       'my-combobox': LocalJSX.MyCombobox & JSXBase.HTMLAttributes<HTMLMyComboboxElement>;
-      'my-form-control': LocalJSX.MyFormControl & JSXBase.HTMLAttributes<HTMLMyFormControlElement>;
     }
   }
 }

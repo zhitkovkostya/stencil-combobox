@@ -13,6 +13,7 @@
 | `isDisabled`     | `disabled`    |             | `boolean` | `false`          |
 | `isMultiple`     | `multiple`    |             | `boolean` | `false`          |
 | `isOrdered`      | `ordered`     |             | `boolean` | `false`          |
+| `isRequired`     | `required`    |             | `boolean` | `false`          |
 | `label`          | `label`       |             | `string`  | `null`           |
 | `placeholder`    | `placeholder` |             | `string`  | `'Select value'` |
 
@@ -41,13 +42,11 @@ Type: `Promise<void>`
 
 ### Depends on
 
-- [my-form-control](../form-control)
 - [my-chip](../chip)
 
 ### Graph
 ```mermaid
 graph TD;
-  my-combobox --> my-form-control
   my-combobox --> my-chip
   style my-combobox fill:#f9f,stroke:#333,stroke-width:4px
 ```

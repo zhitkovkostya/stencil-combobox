@@ -10,7 +10,9 @@ $option-border-color-focus: var(--color-blue-6);
 .combobox {
   position: relative;
   display: flex;
+  flex-direction: column;
   min-height: $field-height;
+  outline: none;
 
   &[aria-disabled="true"] {
     opacity: .5;
@@ -23,11 +25,29 @@ $option-border-color-focus: var(--color-blue-6);
     }
   }
 
-  &.combobox-focused {
-    outline: none;
+  &[aria-required="true"] {
+    .combobox-label {
+      &::after {
+        content: "⬤";
+        display: flex;
+        width: 1rem;
+        height: 1rem;
+        margin-left: 0.3rem;
+        align-items: center;
+        font-size: 0.3rem;
+        color: var(--color-red-1);
+      }
+    }
+  }
+
+  .combobox-label {
+    display: flex;
+    margin-bottom: .5rem;
+    line-height: 1;
   }
 
   .combobox-field {
+    position: relative;
     overflow: hidden;
     display: flex;
     align-items: center;

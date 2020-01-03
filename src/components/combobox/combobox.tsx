@@ -12,7 +12,7 @@ interface ComboboxOption {
 @Component({
   tag: 'my-combobox',
   styleUrl: 'combobox.scss',
-  shadow: true
+  shadow: false
 })
 export class ComboBox {
   private _listboxElement: HTMLUListElement;
@@ -31,6 +31,8 @@ export class ComboBox {
 
   @Prop({attribute: 'disabled'}) isDisabled: boolean = false;
 
+  @Prop({attribute: 'required'}) isRequired: boolean = false;
+
   @Prop({attribute: 'ordered'}) isOrdered: boolean = false;
 
   @Prop({attribute: 'options'}) defaultOptions = [];
@@ -42,8 +44,6 @@ export class ComboBox {
   @State() searchText: string = '';
 
   @State() isExpanded: boolean = false;
-
-  @State() isFocused: boolean = false;
 
   @State() focusedOptionIndex: number = 0;
 
@@ -91,17 +91,6 @@ export class ComboBox {
     this.focus();
   }
 
-  @Listen('my-label-click')
-  onLabelClick() {
-    this.focus();
-    this.expand();
-  }
-
-  @Method()
-  clearSelection() {
-    this.selectedOptions = [];
-  }
-
   componentWillLoad() {
     const optionsData = Array.from(this.el.getElementsByTagName('option')).map(optionElement => ({
       value: String(optionElement.value),
@@ -131,117 +120,117 @@ export class ComboBox {
 
   render() {
     return (
-      <my-form-control label={this.label} id={this.id}>
-        <div
-          id={this.id}
-          class={{
-            'combobox': true,
-            'combobox-focused': this.isFocused
-          }}
-          onFocus={this.onFocus.bind(this)}
-          role='combobox'
-          aria-haspopup='listbox'
-          aria-owns={this.id + '-listbox'}
-          aria-controls={this.id + '-listbox'}
-          aria-expanded={String(this.isExpanded)}
-          aria-disabled={String(this.isDisabled)}
-          tabIndex={0}
-        >
+      <div
+        id={this.id}
+        class='combobox'
+        onFocus={this.onFocus.bind(this)}
+        role='combobox'
+        aria-haspopup='listbox'
+        aria-owns={this.id + '-listbox'}
+        aria-controls={this.id + '-listbox'}
+        aria-expanded={String(this.isExpanded)}
+        aria-disabled={String(this.isDisabled)}
+        aria-required={String(this.isRequired)}
+        tabIndex={0}
+      >
+        {this.label &&
+          <label class='combobox-label' htmlFor={this.id}>
+            {this.label}
+          </label>
+        }
+
+        <div class='combobox-field'>
+          {this.isMultiple && this.selectedOptions.map(option => (
+            <my-chip data={option} isDeletable={!this.isDisabled}>
+              {option.text}
+            </my-chip>
+          ))}
+
+          {!this.isMultiple && this.selectedOptions.length > 0 && this.searchText.length === 0 &&
+            <span class='combobox-placeholder'>{this.selectedOptions[0].text}</span>
+          }
+
           <div
-            class='combobox-field'
-            onClick={this.onFieldClick.bind(this)}
+            ref={el => this._searchBufferElement = el as HTMLElement}
+            class='combobox-search-buffer'
           >
-            {this.isMultiple && this.selectedOptions.map(option => (
-              <my-chip data={option} isDeletable={!this.isDisabled}>
-                {option.text}
-              </my-chip>
-            ))}
-
-            {!this.isMultiple && this.selectedOptions.length > 0 && this.searchText.length === 0 &&
-              <span class='combobox-placeholder'>{this.selectedOptions[0].text}</span>
-            }
-
-            <div
-              ref={el => this._searchBufferElement = el as HTMLElement}
-              class='combobox-search-buffer'
-            >
-              {this.searchText}
-            </div>
-
-            <input
-              type='text'
-              role='searchbox'
-              placeholder={this.selectedOptions.length > 0 ? '' : this.placeholder}
-              class='combobox-search'
-              style={{width: (this._searchBufferElement && this.selectedOptions.length > 0) ? `calc(${this._searchBufferElement.offsetWidth}px + 2rem` : 'auto'}}
-              ref={el => this._searchElement = el as HTMLInputElement}
-              value={this.searchText}
-              tabIndex={-1}
-              autoComplete='off'
-              aria-autocomplete='list'
-              aria-multiline='false'
-              onInput={this.onSearchInput.bind(this)}
-            />
+            {this.searchText}
           </div>
 
-          <svg class='combobox-chevron' viewBox='0 0 24 24' width='24' height='24' stroke='currentColor' stroke-width='2' fill='none'
+          <input
+            type='text'
+            role='searchbox'
+            placeholder={this.selectedOptions.length > 0 ? '' : this.placeholder}
+            class='combobox-search'
+            style={{width: (this._searchBufferElement && this.selectedOptions.length > 0) ? `calc(${this._searchBufferElement.offsetWidth}px + 2rem` : 'auto'}}
+            ref={el => this._searchElement = el as HTMLInputElement}
+            value={this.searchText}
+            tabIndex={-1}
+            autoComplete='off'
+            aria-autocomplete='list'
+            aria-multiline='false'
+            onInput={this.onSearchInput.bind(this)}
+          />
+
+          <svg class='combobox-chevron' viewBox='0 0 24 24' width='24' height='24' stroke='currentColor'
+               stroke-width='2' fill='none'
                stroke-linecap='round' stroke-linejoin='round'>
             <polyline points='6 9 12 15 18 9'></polyline>
           </svg>
-
-          <ul
-            id={this.id + '-listbox'}
-            class='combobox-listbox'
-            ref={el => this._listboxElement = el as HTMLUListElement}
-            role='listbox'
-            aria-multiselectable={String(this.isMultiple)}
-            aria-activedescendant={
-              this.focusedOptionIndex !== null
-              && this.focusedOptionIndex < this.options.length
-              && (this.id + '-option-' + this.options[this.focusedOptionIndex].value)
-            }
-          >
-            {this.options.length > 0
-              ? this.options.map((option, index) => (
-                <li
-                  id={this.id + '-option-' + option.value}
-                  class={{
-                    'combobox-option': true,
-                    'combobox-option-focused': this.focusedOptionIndex === index
-                  }}
-                  role='option'
-                  aria-selected={String(this.checkSelectedState(option))}
-                  onClick={this.onOptionClick.bind(this, option)}
-                >
-                  <svg class='combobox-option-check' viewBox='0 0 24 24' width='16' height='16' stroke='currentColor' stroke-width='2' fill='none'
-                       stroke-linecap='round' stroke-linejoin='round'>
-                    <polyline points='20 6 9 17 4 12'></polyline>
-                  </svg>
-                  {option.text}
-                </li>
-              ))
-              : <li class='combobox-option'>No options available</li>
-            }
-          </ul>
-
-          <select
-            hidden={true}
-            disabled={this.isDisabled}
-            multiple={this.isMultiple}
-            aria-hidden='true'
-            aria-disabled={String(this.isDisabled)}
-          >
-            {this.options.map(option => (
-              <option
-                value={option.value}
-                selected={this.checkSelectedState(option)}
-              >
-                {option.text}
-              </option>
-            ))}
-          </select>
         </div>
-      </my-form-control>
+
+        <ul
+          id={this.id + '-listbox'}
+          class='combobox-listbox'
+          ref={el => this._listboxElement = el as HTMLUListElement}
+          role='listbox'
+          aria-multiselectable={String(this.isMultiple)}
+          aria-activedescendant={
+            this.focusedOptionIndex !== null
+            && this.focusedOptionIndex < this.options.length
+            && (this.id + '-option-' + this.options[this.focusedOptionIndex].value)
+          }
+        >
+          {this.options.length > 0
+            ? this.options.map((option, index) => (
+              <li
+                id={this.id + '-option-' + option.value}
+                class={{
+                  'combobox-option': true,
+                  'combobox-option-focused': this.focusedOptionIndex === index
+                }}
+                role='option'
+                aria-selected={String(this.checkSelectedState(option))}
+                onClick={this.onOptionClick.bind(this, option)}
+              >
+                <svg class='combobox-option-check' viewBox='0 0 24 24' width='16' height='16' stroke='currentColor' stroke-width='2' fill='none'
+                     stroke-linecap='round' stroke-linejoin='round'>
+                  <polyline points='20 6 9 17 4 12'></polyline>
+                </svg>
+                {option.text}
+              </li>
+            ))
+            : <li class='combobox-option'>No options available</li>
+          }
+        </ul>
+
+        <select
+          hidden={true}
+          disabled={this.isDisabled}
+          multiple={this.isMultiple}
+          required={this.isRequired}
+          aria-hidden='true'
+        >
+          {this.options.map(option => (
+            <option
+              value={option.value}
+              selected={this.checkSelectedState(option)}
+            >
+              {option.text}
+            </option>
+          ))}
+        </select>
+      </div>
     );
   }
 
@@ -256,7 +245,7 @@ export class ComboBox {
     return index;
   }
 
-  onFieldClick() {
+  onClick() {
     this.isExpanded ? this.collapse() : this.expand();
     this.focus();
   }
@@ -328,8 +317,8 @@ export class ComboBox {
   }
 
   onEscapeKeyDown() {
-    this.collapse();
     this.focus();
+    this.collapse();
     this.clearSearch();
   }
 
@@ -368,13 +357,13 @@ export class ComboBox {
   }
 
   focus() {
-    this.isFocused = true;
     this._searchElement.focus();
+    this.expand();
   }
 
   blur() {
-    this.isFocused = false;
     this._searchElement.blur();
+    this.collapse();
   }
 
   expand() {
@@ -465,6 +454,11 @@ export class ComboBox {
 
   sortOptions() {
     this.selectedOptions.sort((a, b) => a.text.localeCompare(b.text));
+  }
+
+  @Method()
+  async clearSelection() {
+    this.selectedOptions = [];
   }
 
   clearSearch() {
