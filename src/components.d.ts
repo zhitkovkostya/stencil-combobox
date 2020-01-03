@@ -15,13 +15,13 @@ export namespace Components {
     'isDeletable': boolean;
   }
   interface MyCombobox {
+    'clearSelection': () => Promise<void>;
     'defaultOptions': any[];
     'isDisabled': boolean;
     'isMultiple': boolean;
     'isOrdered': boolean;
     'label': string;
     'placeholder': string;
-    'selectedOptions': any[];
   }
   interface MyFormControl {
     'id': string;
@@ -70,7 +70,6 @@ declare namespace LocalJSX {
     'label'?: string;
     'onMy-change'?: (event: CustomEvent<any>) => void;
     'placeholder'?: string;
-    'selectedOptions'?: any[];
   }
   interface MyFormControl {
     'id'?: string;

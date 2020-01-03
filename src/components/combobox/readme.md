@@ -7,15 +7,14 @@
 
 ## Properties
 
-| Property          | Attribute     | Description | Type      | Default          |
-| ----------------- | ------------- | ----------- | --------- | ---------------- |
-| `defaultOptions`  | --            |             | `any[]`   | `[]`             |
-| `isDisabled`      | `disabled`    |             | `boolean` | `false`          |
-| `isMultiple`      | `multiple`    |             | `boolean` | `false`          |
-| `isOrdered`       | `ordered`     |             | `boolean` | `false`          |
-| `label`           | `label`       |             | `string`  | `null`           |
-| `placeholder`     | `placeholder` |             | `string`  | `'Select value'` |
-| `selectedOptions` | --            |             | `any[]`   | `[]`             |
+| Property         | Attribute     | Description | Type      | Default          |
+| ---------------- | ------------- | ----------- | --------- | ---------------- |
+| `defaultOptions` | --            |             | `any[]`   | `[]`             |
+| `isDisabled`     | `disabled`    |             | `boolean` | `false`          |
+| `isMultiple`     | `multiple`    |             | `boolean` | `false`          |
+| `isOrdered`      | `ordered`     |             | `boolean` | `false`          |
+| `label`          | `label`       |             | `string`  | `null`           |
+| `placeholder`    | `placeholder` |             | `string`  | `'Select value'` |
 
 
 ## Events
@@ -23,6 +22,19 @@
 | Event       | Description | Type               |
 | ----------- | ----------- | ------------------ |
 | `my-change` |             | `CustomEvent<any>` |
+
+
+## Methods
+
+### `clearSelection() => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ## Dependencies

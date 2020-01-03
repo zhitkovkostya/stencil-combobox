@@ -4,17 +4,20 @@ import {withActions} from '@storybook/addon-actions';
 import readme from './readme.md';
 
 const options = [
-  {value: 1, text: 'Argentina'},
-  {value: 2, text: 'Australia'},
-  {value: 3, text: 'Brazil'},
-  {value: 4, text: 'Canada'},
-  {value: 5, text: 'China'},
-  {value: 6, text: 'France'},
-  {value: 7, text: 'Germany'},
-  {value: 8, text: 'India'},
-  {value: 9, text: 'Mexico'},
-  {value: 10, text: 'Russia'},
-  {value: 11, text: 'United States'}
+  {value: 'ar', text: 'Argentina'},
+  {value: 'at', text: 'Australia'},
+  {value: 'br', text: 'Brazil'},
+  {value: 'ca', text: 'Canada'},
+  {value: 'cn', text: 'China'},
+  {value: 'fr', text: 'France'},
+  {value: 'de', text: 'Germany'},
+  {value: 'in', text: 'India'},
+  {value: 'mx', text: 'Mexico'},
+  {value: 'no', text: 'Norway'},
+  {value: 'ru', text: 'Russia', selected: true},
+  {value: 'ch', text: 'Switzerland'},
+  {value: 'gb', text: 'United Kingdom'},
+  {value: 'us', text: 'United States'}
 ];
 
 const selectedOptions = [
@@ -30,6 +33,7 @@ storiesOf('ComboBox', module)
     const el = document.createElement('my-combobox');
 
     el.defaultOptions = options;
+    el.clearSelection();
 
     return el;
   }, {
@@ -42,6 +46,7 @@ storiesOf('ComboBox', module)
 
     el.label = 'Label';
     el.defaultOptions = options;
+    el.clearSelection();
 
     return el;
   }, {
@@ -53,7 +58,6 @@ storiesOf('ComboBox', module)
     const el = document.createElement('my-combobox');
 
     el.defaultOptions = options;
-    el.selectedOptions = [selectedOptions[1]];
 
     return el;
   }, {
@@ -66,10 +70,20 @@ storiesOf('ComboBox', module)
 
     el.isDisabled = true;
     el.defaultOptions = options;
-    el.selectedOptions = [selectedOptions[1]];
 
     return el;
   }, {
+    notes: {
+      markdown: readme
+    }
+  })
+  .add('Single Filled With Options', () => `
+    <my-combobox>
+      ${options.map(option => `
+        <option value="${option.value}" ${option.selected ? 'selected' : ''}>${option.text}</option>        
+      `)}
+    </my-combobox>
+  `, {
     notes: {
       markdown: readme
     }
@@ -91,7 +105,6 @@ storiesOf('ComboBox', module)
 
     el.isMultiple = true;
     el.defaultOptions = options;
-    el.selectedOptions = selectedOptions;
 
     return el;
   }, {
@@ -105,7 +118,6 @@ storiesOf('ComboBox', module)
     el.isMultiple = true;
     el.isDisabled = true;
     el.defaultOptions = options;
-    el.selectedOptions = selectedOptions;
 
     return el;
   }, {
@@ -119,7 +131,6 @@ storiesOf('ComboBox', module)
     el.isMultiple = true;
     el.isOrdered = true;
     el.defaultOptions = options;
-    el.selectedOptions = [selectedOptions[1], selectedOptions[0]];
 
     return el;
   }, {

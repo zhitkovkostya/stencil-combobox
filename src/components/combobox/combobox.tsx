@@ -1,4 +1,4 @@
-import {Component, Element, Event, Prop, State, EventEmitter, h, Listen} from '@stencil/core';
+import {Component, Element, Event, Prop, State, EventEmitter, h, Listen, Method} from '@stencil/core';
 import uniqueId from 'lodash.uniqueid';
 import {isTouchCapable} from '../../utils/utils';
 
@@ -35,11 +35,9 @@ export class ComboBox {
 
   @Prop({attribute: 'options'}) defaultOptions = [];
 
-  @Prop() selectedOptions = [];
-
   @State() options: ComboboxOption[] = [];
 
-  @State() value: ComboboxOption[] = [];
+  @State() selectedOptions: ComboboxOption[] = [];
 
   @State() searchText: string = '';
 
@@ -66,7 +64,7 @@ export class ComboBox {
         this.onBackspaceKeyDown();
         break;
       case 'Enter':
-        this.onEnterKeyDown();
+        this.onEnterKeyDown(event);
         break;
       case ' ':
         this.onSpaceKeyDown();
@@ -99,15 +97,31 @@ export class ComboBox {
     this.expand();
   }
 
+  @Method()
+  clearSelection() {
+    this.selectedOptions = [];
+  }
+
   componentWillLoad() {
-    this.value = [
-      ...this.value,
-      ...this.selectedOptions
+    const optionsData = Array.from(this.el.getElementsByTagName('option')).map(optionElement => ({
+      value: String(optionElement.value),
+      text: String(optionElement.text),
+      selected: Boolean(optionElement.selected)
+    }));
+
+    this.defaultOptions = [
+      ...this.defaultOptions,
+      ...optionsData
     ];
 
     this.options = [
       ...this.options,
-      ...this.defaultOptions
+      ...this.defaultOptions,
+    ];
+
+    this.selectedOptions = [
+      ...this.selectedOptions,
+      ...this.defaultOptions.filter(option => option.selected === true)
     ];
 
     if (this.isOrdered) {
@@ -137,38 +151,35 @@ export class ComboBox {
             class='combobox-field'
             onClick={this.onFieldClick.bind(this)}
           >
-            {this.isMultiple && this.value.map(option => (
+            {this.isMultiple && this.selectedOptions.map(option => (
               <my-chip data={option} isDeletable={!this.isDisabled}>
                 {option.text}
               </my-chip>
             ))}
 
-            {!this.isMultiple && this.value.length > 0 && this.searchText.length === 0 &&
-              <span class='combobox-placeholder'>{this.value[0].text}</span>
+            {!this.isMultiple && this.selectedOptions.length > 0 && this.searchText.length === 0 &&
+              <span class='combobox-placeholder'>{this.selectedOptions[0].text}</span>
             }
 
             <div
               ref={el => this._searchBufferElement = el as HTMLElement}
-              className='combobox-search-buffer'
+              class='combobox-search-buffer'
             >
               {this.searchText}
             </div>
 
             <input
               type='text'
-              placeholder={this.value.length > 0 ? '' : this.placeholder}
+              placeholder={this.selectedOptions.length > 0 ? '' : this.placeholder}
               class='combobox-search'
-              style={{width: (this._searchBufferElement && this.value.length > 0) ? `calc(${this._searchBufferElement.offsetWidth}px + 2rem` : 'auto'}}
+              style={{width: (this._searchBufferElement && this.selectedOptions.length > 0) ? `calc(${this._searchBufferElement.offsetWidth}px + 2rem` : 'auto'}}
               ref={el => this._searchElement = el as HTMLInputElement}
               value={this.searchText}
               tabIndex={-1}
               autoComplete='off'
               aria-autocomplete='list'
-              onKeyPress={this.onSearchFieldKeyPress.bind(this)}
-              onKeyUp={this.onSearchFieldKeyUp.bind(this)}
+              onInput={this.onSearchInput.bind(this)}
             />
-
-
           </div>
 
           <svg class='combobox-chevron' viewBox='0 0 24 24' width='24' height='24' stroke='currentColor' stroke-width='2' fill='none'
@@ -202,7 +213,7 @@ export class ComboBox {
                 >
                   <svg class='combobox-option-check' viewBox='0 0 24 24' width='16' height='16' stroke='currentColor' stroke-width='2' fill='none'
                        stroke-linecap='round' stroke-linejoin='round'>
-                    <polyline points="20 6 9 17 4 12"></polyline>
+                    <polyline points='20 6 9 17 4 12'></polyline>
                   </svg>
                   {option.text}
                 </li>
@@ -233,7 +244,7 @@ export class ComboBox {
   }
 
   checkSelectedState(option: ComboboxOption) {
-    return this.value.some(selectedOption => selectedOption.value === option.value);
+    return this.selectedOptions.some(selectedOption => selectedOption.value === option.value);
   }
 
   getOptionIndex(option: ComboboxOption) {
@@ -248,22 +259,19 @@ export class ComboBox {
     this.focus();
   }
 
-  onFocus() {
-    this.focus();
-  }
+  onSearchInput(event) {
+    this.searchText = event.target.value || '';
+    this.options = this.defaultOptions.filter(option => option.text.toLowerCase().includes(this.searchText.toLowerCase()));
 
-  onSearchFieldKeyPress(event) {
-    if (event.code !== 'Enter' && !this.isExpanded) {
+    if (!this.isExpanded) {
       this.expand();
     }
 
     this.focusOption(0);
   }
 
-  onSearchFieldKeyUp(event) {
-    this.searchText = event.target.value;
-
-    this.options = this.defaultOptions.filter(option => option.text.toLowerCase().includes(this.searchText.toLowerCase()));
+  onFocus() {
+    this.focus();
   }
 
   onOptionClick(option: ComboboxOption, event) {
@@ -277,8 +285,8 @@ export class ComboBox {
   }
 
   onBackspaceKeyDown() {
-    const lastOptionIndex = this.value.length - 1;
-    const lastOption = this.value[lastOptionIndex];
+    const lastOptionIndex = this.selectedOptions.length - 1;
+    const lastOption = this.selectedOptions[lastOptionIndex];
     const isFilterDisabled = this.searchText.length === 0;
 
     if (lastOption && isFilterDisabled) {
@@ -286,7 +294,11 @@ export class ComboBox {
     }
   }
 
-  onEnterKeyDown() {
+  onEnterKeyDown(event) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    event.stopPropagation();
+
     const focusedOption = this.options[this.focusedOptionIndex];
 
     if (this.isExpanded) {
@@ -321,6 +333,8 @@ export class ComboBox {
 
   onArrowDownKeyDown(event) {
     event.preventDefault();
+    event.stopImmediatePropagation();
+    event.stopPropagation();
 
     const expectedIndex = this.focusedOptionIndex + 1;
     const maxIndex = this.options.length;
@@ -336,6 +350,8 @@ export class ComboBox {
 
   onArrowUpKeyDown(event) {
     event.preventDefault();
+    event.stopImmediatePropagation();
+    event.stopPropagation();
 
     const expectedIndex = this.focusedOptionIndex - 1;
     const maxIndex = this.options.length - 1;
@@ -360,9 +376,11 @@ export class ComboBox {
   }
 
   expand() {
-    const selectedOptionCount = this.value.length;
-    const lastSelectedOption = selectedOptionCount > 0 ? this.value[selectedOptionCount - 1] : null;
+    const selectedOptionCount = this.selectedOptions.length;
+    const lastSelectedOption = selectedOptionCount > 0 ? this.selectedOptions[selectedOptionCount - 1] : null;
     const lastSelectedOptionIndex = lastSelectedOption ? this.getOptionIndex(lastSelectedOption) : 0;
+
+    this.clearFilter();
 
     if (isTouchCapable()) {
       // TODO: display native option list
@@ -423,8 +441,8 @@ export class ComboBox {
   }
 
   selectOption(option: ComboboxOption) {
-    this.value = [
-      ...this.value,
+    this.selectedOptions = [
+      ...this.selectedOptions,
       option
     ];
 
@@ -434,21 +452,24 @@ export class ComboBox {
   }
 
   deselectOption(option: ComboboxOption) {
-    const value = [...this.value];
-    const optionIndex = value.findIndex(selectedOption => selectedOption.value === option.value);
+    const selectedOptions = [...this.selectedOptions];
+    const optionIndex = selectedOptions.findIndex(selectedOption => selectedOption.value === option.value);
 
-    this.value = [...value.slice(0, optionIndex), ...value.slice(optionIndex + 1)];
+    this.selectedOptions = [
+      ...selectedOptions.slice(0, optionIndex),
+      ...selectedOptions.slice(optionIndex + 1)
+    ];
   }
 
   sortOptions() {
-    this.value.sort((a, b) => a.text.localeCompare(b.text));
-  }
-
-  clearSelection() {
-    this.value = [];
+    this.selectedOptions.sort((a, b) => a.text.localeCompare(b.text));
   }
 
   clearSearch() {
     this.searchText = '';
+  }
+
+  clearFilter() {
+    this.options = [...this.defaultOptions];
   }
 }
