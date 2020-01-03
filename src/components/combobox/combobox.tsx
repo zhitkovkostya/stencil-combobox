@@ -170,6 +170,7 @@ export class ComboBox {
 
             <input
               type='text'
+              role='searchbox'
               placeholder={this.selectedOptions.length > 0 ? '' : this.placeholder}
               class='combobox-search'
               style={{width: (this._searchBufferElement && this.selectedOptions.length > 0) ? `calc(${this._searchBufferElement.offsetWidth}px + 2rem` : 'auto'}}
@@ -178,6 +179,7 @@ export class ComboBox {
               tabIndex={-1}
               autoComplete='off'
               aria-autocomplete='list'
+              aria-multiline='false'
               onInput={this.onSearchInput.bind(this)}
             />
           </div>

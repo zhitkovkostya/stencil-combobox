@@ -2,7 +2,7 @@ import {Component, Host, h, Prop, Event, EventEmitter} from '@stencil/core';
 
 @Component({
   tag: 'my-form-control',
-  styleUrl: 'form-control.css',
+  styleUrl: 'form-control.scss',
   shadow: true
 })
 export class FormControl {
