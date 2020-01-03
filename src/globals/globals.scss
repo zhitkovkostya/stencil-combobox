@@ -1,9 +1,32 @@
 :root {
   --font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  --color-gray: 89, 106, 129;
+  --color-gray-1: rgba(var(--color-gray), 100%);
+  --color-gray-2: rgba(var(--color-gray), 83.33%);
+  --color-gray-3: rgba(var(--color-gray), 66.66%);
+  --color-gray-4: rgba(var(--color-gray), 50%);
+  --color-gray-5: rgba(var(--color-gray), 33.33%);
+  --color-gray-6: rgba(var(--color-gray), 16.66%);
+
+  --color-blue: 22, 118, 243;
+  --color-blue-1: rgba(var(--color-blue), 100%);
+  --color-blue-6: rgba(var(--color-blue), 16.66%);
+
+  --shadow: 0 .5em 1em rgba(var(--color-gray), .25);
+}
+
+* {
+  box-sizing: border-box;
+
+  &::before,
+  &::after {
+    box-sizing: border-box;
+  }
 }
 
 body {
-  font: 14px/1.5 var(--font-family);
+  font: 16px/1.5 var(--font-family);
   color: #727272;
   font-weight: 400;
 }

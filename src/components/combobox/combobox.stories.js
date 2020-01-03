@@ -37,6 +37,18 @@ storiesOf('ComboBox', module)
       markdown: readme
     }
   })
+  .add('Single Labeled', () => {
+    const el = document.createElement('my-combobox');
+
+    el.label = 'Label';
+    el.defaultOptions = options;
+
+    return el;
+  }, {
+    notes: {
+      markdown: readme
+    }
+  })
   .add('Single Filled', () => {
     const el = document.createElement('my-combobox');
 

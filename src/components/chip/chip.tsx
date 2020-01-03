@@ -2,7 +2,7 @@ import {Component, h, Event, EventEmitter, Prop, Element} from '@stencil/core';
 
 @Component({
   tag: 'my-chip',
-  styleUrl: 'chip.css',
+  styleUrl: 'chip.scss',
   shadow: true
 })
 export class Chip {
@@ -10,7 +10,7 @@ export class Chip {
 
   @Prop() data = {};
 
-  @Prop({attribute: 'deletable'}) isDeletable = false;
+  @Prop({attribute: 'deletable'}) isDeletable: boolean = false;
 
   @Event({
     eventName: 'my-chip-delete',
