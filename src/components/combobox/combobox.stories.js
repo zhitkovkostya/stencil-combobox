@@ -64,7 +64,11 @@ storiesOf('ComboBox', module)
     el.label = 'Label';
     el.isRequired = true;
     el.defaultOptions = options;
-    el.clearSelection();
+
+    (async () => {
+      await customElements.whenDefined('my-combobox');
+      await el.clearSelection();
+    })();
 
     return el;
   }, {
