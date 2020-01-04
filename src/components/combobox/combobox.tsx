@@ -297,12 +297,11 @@ export class ComboBox {
         this.toggleOption(focusedOption);
       }
 
+      this.focus();
       this.collapse();
     } else {
       this.expand();
     }
-
-    this.focus();
   }
 
   onSpaceKeyDown() {
