@@ -2,10 +2,15 @@ $field-height: 2.5rem;
 $field-background: var(--color-gray-6);
 $field-background-hover: var(--color-gray-5);
 $field-color-placeholder: var(--color-gray-2);
-$field-color-chevron: var(--color-gray-2);
+$field-color-icon: var(--color-gray-2);
+$field-color-icon-hover: var(--color-gray-1);
 $field-color-value: #000;
 $field-border-radius: .25rem;
 $option-border-color-focus: var(--color-blue-6);
+
+* {
+  box-sizing: border-box;
+}
 
 .combobox {
   position: relative;
@@ -51,9 +56,9 @@ $option-border-color-focus: var(--color-blue-6);
     overflow: hidden;
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
+    flex: 1 1 100%;
     width: 100%;
-    padding: .125rem 2.5rem .125rem 0.25rem;
+    padding: .125rem 0.25rem .125rem 0.25rem;
     border-radius: $field-border-radius;
     background-color: $field-background;
     cursor: text;
@@ -80,6 +85,7 @@ $option-border-color-focus: var(--color-blue-6);
   }
 
   .combobox-search {
+    flex: 1 1 auto;
     height: 2rem;
     border: none;
     background-color: transparent;
@@ -98,12 +104,35 @@ $option-border-color-focus: var(--color-blue-6);
     opacity: 0;
   }
 
+  .combobox-chips {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 100%;
+  }
+
+  .combobox-chevron,
+  .combobox-clear {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background-color: transparent;
+    border: none;
+    color: $field-color-icon;
+    outline: none;
+
+    &:hover {
+      color: $field-color-icon-hover;
+    }
+  }
+
   .combobox-chevron {
-    position: absolute;
-    top: .5rem;
-    right: .5rem;
-    color: $field-color-chevron;
     pointer-events: none;
+  }
+
+  .combobox-clear {
+    cursor: pointer;
   }
 
   .combobox-listbox {

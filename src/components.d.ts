@@ -15,8 +15,8 @@ export namespace Components {
     'isDeletable': boolean;
   }
   interface MyCombobox {
-    'clearSelection': () => Promise<void>;
     'defaultOptions': any[];
+    'isClearable': boolean;
     'isDisabled': boolean;
     'isMultiple': boolean;
     'isOrdered': boolean;
@@ -54,6 +54,7 @@ declare namespace LocalJSX {
   }
   interface MyCombobox {
     'defaultOptions'?: any[];
+    'isClearable'?: boolean;
     'isDisabled'?: boolean;
     'isMultiple'?: boolean;
     'isOrdered'?: boolean;

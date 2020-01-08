@@ -1,4 +1,4 @@
-import {Component, Element, Event, Prop, State, EventEmitter, h, Listen, Method} from '@stencil/core';
+import {Component, Element, Event, Prop, State, EventEmitter, h, Listen} from '@stencil/core';
 import uniqueId from 'lodash.uniqueid';
 import {isTouchCapable} from '../../utils/utils';
 
@@ -34,6 +34,8 @@ export class ComboBox {
   @Prop({attribute: 'required'}) isRequired: boolean = false;
 
   @Prop({attribute: 'ordered'}) isOrdered: boolean = false;
+
+  @Prop({attribute: 'clearable'}) isClearable: boolean = false;
 
   @Prop({attribute: 'options'}) defaultOptions = [];
 
@@ -139,44 +141,62 @@ export class ComboBox {
           </label>
         }
 
-        <div class='combobox-field'>
-          {this.isMultiple && this.selectedOptions.map(option => (
-            <my-chip data={option} isDeletable={!this.isDisabled}>
-              {option.text}
-            </my-chip>
-          ))}
-
+        <div class='combobox-field' onClick={this.onFieldClick.bind(this)}>
           {!this.isMultiple && this.selectedOptions.length > 0 && this.searchText.length === 0 &&
             <span class='combobox-placeholder'>{this.selectedOptions[0].text}</span>
           }
 
-          <div
-            ref={el => this._searchBufferElement = el as HTMLElement}
-            class='combobox-search-buffer'
-          >
-            {this.searchText}
+          <div class='combobox-chips'>
+            {this.isMultiple && this.selectedOptions.map(option => (
+              <my-chip data={option} isDeletable={!this.isDisabled}>
+                {option.text}
+              </my-chip>
+            ))}
+
+            <input
+              type='text'
+              role='searchbox'
+              placeholder={this.selectedOptions.length > 0 ? '' : this.placeholder}
+              class='combobox-search'
+              style={{width: (this._searchBufferElement && this.selectedOptions.length > 0) ? `calc(${this._searchBufferElement.offsetWidth}px + 2rem` : 'auto'}}
+              ref={el => {
+                if (el) {
+                  this._searchElement = el as HTMLInputElement
+                }
+              }}
+              value={this.searchText}
+              tabIndex={-1}
+              autoComplete='off'
+              aria-autocomplete='list'
+              aria-multiline='false'
+              onInput={this.onSearchInput.bind(this)}
+            />
+
+            <div
+              ref={el => this._searchBufferElement = el as HTMLElement}
+              class='combobox-search-buffer'
+            >
+              {this.searchText}
+            </div>
           </div>
 
-          <input
-            type='text'
-            role='searchbox'
-            placeholder={this.selectedOptions.length > 0 ? '' : this.placeholder}
-            class='combobox-search'
-            style={{width: (this._searchBufferElement && this.selectedOptions.length > 0) ? `calc(${this._searchBufferElement.offsetWidth}px + 2rem` : 'auto'}}
-            ref={el => this._searchElement = el as HTMLInputElement}
-            value={this.searchText}
-            tabIndex={-1}
-            autoComplete='off'
-            aria-autocomplete='list'
-            aria-multiline='false'
-            onInput={this.onSearchInput.bind(this)}
-          />
+          {this.isClearable && this.selectedOptions.length > 0 &&
+            <button class='combobox-clear' onClick={this.onClearButtonClick.bind(this)}>
+              <svg viewBox='0 0 24 24' width='16' height='16' stroke='currentColor' stroke-width='2' fill='none'
+                   stroke-linecap='round' stroke-linejoin='round'>
+                <line x1='18' y1='6' x2='6' y2='18'></line>
+                <line x1='6' y1='6' x2='18' y2='18'></line>
+              </svg>
+            </button>
+          }
 
-          <svg class='combobox-chevron' viewBox='0 0 24 24' width='24' height='24' stroke='currentColor'
-               stroke-width='2' fill='none'
-               stroke-linecap='round' stroke-linejoin='round'>
-            <polyline points='6 9 12 15 18 9'></polyline>
-          </svg>
+          <button class='combobox-chevron'>
+            <svg viewBox='0 0 24 24' width='20' height='20' stroke='currentColor'
+                 stroke-width='2' fill='none'
+                 stroke-linecap='round' stroke-linejoin='round'>
+              <polyline points='6 9 12 15 18 9'></polyline>
+            </svg>
+          </button>
         </div>
 
         <ul
@@ -245,9 +265,19 @@ export class ComboBox {
     return index;
   }
 
-  onClick() {
-    this.isExpanded ? this.collapse() : this.expand();
+  onFieldClick() {
     this.focus();
+    // this.isExpanded ? this.collapse() : this.expand();
+  }
+
+  onClearButtonClick(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.clearSelection();
+    this.clearSearch();
+    this.clearFilter();
+    this.collapse();
   }
 
   onSearchInput(event) {
@@ -271,8 +301,8 @@ export class ComboBox {
     event.preventDefault();
 
     this.toggleOption(option);
-    this.collapse();
     this.focus();
+    this.collapse();
   }
 
   onBackspaceKeyDown() {
@@ -381,7 +411,6 @@ export class ComboBox {
   }
 
   collapse() {
-    this._listboxElement.scrollTop = 0;
     this.togglePopup(false);
     this.focusOption(null);
   }
@@ -455,8 +484,7 @@ export class ComboBox {
     this.selectedOptions.sort((a, b) => a.text.localeCompare(b.text));
   }
 
-  @Method()
-  async clearSelection() {
+  clearSelection() {
     this.selectedOptions = [];
   }
 

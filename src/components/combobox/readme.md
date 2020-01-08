@@ -10,6 +10,7 @@
 | Property         | Attribute     | Description | Type      | Default          |
 | ---------------- | ------------- | ----------- | --------- | ---------------- |
 | `defaultOptions` | --            |             | `any[]`   | `[]`             |
+| `isClearable`    | `clearable`   |             | `boolean` | `false`          |
 | `isDisabled`     | `disabled`    |             | `boolean` | `false`          |
 | `isMultiple`     | `multiple`    |             | `boolean` | `false`          |
 | `isOrdered`      | `ordered`     |             | `boolean` | `false`          |
@@ -23,19 +24,6 @@
 | Event       | Description | Type               |
 | ----------- | ----------- | ------------------ |
 | `my-change` |             | `CustomEvent<any>` |
-
-
-## Methods
-
-### `clearSelection() => Promise<void>`
-
-
-
-#### Returns
-
-Type: `Promise<void>`
-
-
 
 
 ## Dependencies
