@@ -21,7 +21,8 @@
     "test:watch": "stencil test --spec --watch",
     "story": "npm-run-all --parallel start storybook",
     "story:test": "npm run test:generate && npm run story",
-    "storybook": "start-storybook -p 9001 -c .storybook -s www"
+    "storybook": "start-storybook -p 9001 -c .storybook -s www",
+    "storybook:build": "build-storybook -c .storybook -s www -o .storybook-static"
   },
   "dependencies": {
     "@stencil/sass": "^1.1.1",

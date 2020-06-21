@@ -24,7 +24,6 @@ export namespace Components {
     'label': string;
     'placeholder': string;
   }
-  interface MyTextarea {}
 }
 
 declare global {
@@ -41,16 +40,9 @@ declare global {
     prototype: HTMLMyComboboxElement;
     new (): HTMLMyComboboxElement;
   };
-
-  interface HTMLMyTextareaElement extends Components.MyTextarea, HTMLStencilElement {}
-  var HTMLMyTextareaElement: {
-    prototype: HTMLMyTextareaElement;
-    new (): HTMLMyTextareaElement;
-  };
   interface HTMLElementTagNameMap {
     'my-chip': HTMLMyChipElement;
     'my-combobox': HTMLMyComboboxElement;
-    'my-textarea': HTMLMyTextareaElement;
   }
 }
 
@@ -71,12 +63,10 @@ declare namespace LocalJSX {
     'onMy-change'?: (event: CustomEvent<any>) => void;
     'placeholder'?: string;
   }
-  interface MyTextarea {}
 
   interface IntrinsicElements {
     'my-chip': MyChip;
     'my-combobox': MyCombobox;
-    'my-textarea': MyTextarea;
   }
 }
 
@@ -88,7 +78,6 @@ declare module "@stencil/core" {
     interface IntrinsicElements {
       'my-chip': LocalJSX.MyChip & JSXBase.HTMLAttributes<HTMLMyChipElement>;
       'my-combobox': LocalJSX.MyCombobox & JSXBase.HTMLAttributes<HTMLMyComboboxElement>;
-      'my-textarea': LocalJSX.MyTextarea & JSXBase.HTMLAttributes<HTMLMyTextareaElement>;
     }
   }
 }
