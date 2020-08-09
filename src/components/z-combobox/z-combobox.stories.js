@@ -33,7 +33,6 @@ storiesOf('z-combobox', module)
     const el = document.createElement('z-combobox');
 
     el.defaultOptions = options;
-    el.clearSelection();
 
     return el;
   }, {

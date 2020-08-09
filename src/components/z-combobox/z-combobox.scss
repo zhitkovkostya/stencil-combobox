@@ -1,11 +1,8 @@
-$field-height: 2.5rem;
-$field-background: var(--color-gray-6);
-$field-background-hover: var(--color-gray-5);
+@import "../../globals/field";
+
 $field-color-placeholder: var(--color-gray-2);
 $field-color-icon: var(--color-gray-2);
 $field-color-icon-hover: var(--color-gray-1);
-$field-color-value: #000;
-$field-border-radius: .25rem;
 $option-border-color-focus: var(--color-blue-6);
 
 * {
@@ -16,7 +13,6 @@ $option-border-color-focus: var(--color-blue-6);
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: $field-height;
   outline: none;
 
   &[aria-disabled="true"] {
@@ -52,34 +48,13 @@ $option-border-color-focus: var(--color-blue-6);
   }
 
   &__field {
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    flex: 1 1 100%;
-    width: 100%;
-    padding: .125rem 0.25rem .125rem 0.25rem;
-    border-radius: $field-border-radius;
-    background-color: $field-background;
-    cursor: text;
-    user-select: none;
-    transition: background-color 300ms;
-
-    &:hover {
-      background-color: $field-background-hover;
-    }
-  }
-
-  &__placeholder {
-    color: $field-color-value;
+    @include field;
   }
 
   &__placeholder,
   &__search {
     display: flex;
     align-items: center;
-    margin-left: 0.75rem;
-    font-size: 1rem;
     font-family: var(--font-family);
     line-height: 1;
   }
@@ -108,7 +83,7 @@ $option-border-color-focus: var(--color-blue-6);
     display: flex;
     flex-wrap: wrap;
     flex: 1 1 100%;
-    margin: 0;
+    margin: 0 0 0 -0.9rem;
     padding: 0;
     list-style: none;
   }
@@ -153,7 +128,7 @@ $option-border-color-focus: var(--color-blue-6);
     margin: 0;
     padding: 0.5rem;
     border: 1px solid var(--color-gray-6);
-    border-radius: $field-border-radius;
+    border-radius: var(--border-radius);
     background: #fff;
     overflow-x: hidden;
     overflow-y: auto;
@@ -167,7 +142,7 @@ $option-border-color-focus: var(--color-blue-6);
     align-items: center;
     height: 2.5rem;
     padding: 0 1.5rem;
-    border-radius: $field-border-radius;
+    border-radius: var(--border-radius);
     list-style: none;
     color: var(--color-gray-1);
     text-overflow: ellipsis;

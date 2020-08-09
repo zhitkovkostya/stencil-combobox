@@ -1,21 +1,16 @@
-$chip-background: var(--color-gray-6);
-$chip-color: var(--color-gray-1);
-$chip-color-delete-button: var(--color-gray-3);
-$chip-color-delete-button-hover: var(--color-gray-2);
-
 .chip {
   position: relative;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  background-color: $chip-background;
+  background-color: var(--color-gray-6);
   height: 2rem;
   padding: 0;
   border: none;
-  border-radius: 2rem;
-  color: $chip-color;
+  border-radius: var(--border-radius);
+  color: var(--color-black);
   vertical-align: middle;
-  font-size: .8125rem;
+  font-size: 1rem;
   text-decoration: none;
   white-space: nowrap;
   outline: 0;
@@ -38,12 +33,12 @@ $chip-color-delete-button-hover: var(--color-gray-2);
     padding: 0;
     background-color: transparent;
     border: none;
-    color: $chip-color-delete-button;
+    color: var(--color-gray-3);
     outline: none;
     cursor: pointer;
 
     &:hover {
-      color: $chip-color-delete-button-hover;
+      color: var(--color-gray-2);
     }
   }
 }

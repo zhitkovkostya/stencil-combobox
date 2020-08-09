@@ -143,7 +143,7 @@ export class ZCombobox {
 
         <div class='combobox__field' onClick={this.onFieldClick.bind(this)}>
           {!this.isMultiple && this.selectedOptions.length > 0 && this.searchText.length === 0 &&
-            <span class='combobox-placeholder'>{this.selectedOptions[0].text}</span>
+            <span class='combobox__placeholder'>{this.selectedOptions[0].text}</span>
           }
 
           <ul class='combobox__chips'>

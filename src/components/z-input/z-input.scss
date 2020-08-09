@@ -1,0 +1,9 @@
+@import "../../globals/field";
+
+:host {
+  display: block;
+}
+
+.input {
+  @include field;
+}

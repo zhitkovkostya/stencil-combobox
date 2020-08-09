@@ -57,6 +57,9 @@ export namespace Components {
     */
     'size'?: string;
   }
+  interface ZInput {
+    'value': string;
+  }
   interface ZLabel {
     'color': string;
   }
@@ -107,6 +110,12 @@ declare global {
     new (): HTMLZIconElement;
   };
 
+  interface HTMLZInputElement extends Components.ZInput, HTMLStencilElement {}
+  var HTMLZInputElement: {
+    prototype: HTMLZInputElement;
+    new (): HTMLZInputElement;
+  };
+
   interface HTMLZLabelElement extends Components.ZLabel, HTMLStencilElement {}
   var HTMLZLabelElement: {
     prototype: HTMLZLabelElement;
@@ -120,6 +129,7 @@ declare global {
     'z-grid': HTMLZGridElement;
     'z-grid-cell': HTMLZGridCellElement;
     'z-icon': HTMLZIconElement;
+    'z-input': HTMLZInputElement;
     'z-label': HTMLZLabelElement;
   }
 }
@@ -174,6 +184,9 @@ declare namespace LocalJSX {
     */
     'size'?: string;
   }
+  interface ZInput {
+    'value'?: string;
+  }
   interface ZLabel {
     'color'?: string;
   }
@@ -186,6 +199,7 @@ declare namespace LocalJSX {
     'z-grid': ZGrid;
     'z-grid-cell': ZGridCell;
     'z-icon': ZIcon;
+    'z-input': ZInput;
     'z-label': ZLabel;
   }
 }
@@ -203,6 +217,7 @@ declare module "@stencil/core" {
       'z-grid': LocalJSX.ZGrid & JSXBase.HTMLAttributes<HTMLZGridElement>;
       'z-grid-cell': LocalJSX.ZGridCell & JSXBase.HTMLAttributes<HTMLZGridCellElement>;
       'z-icon': LocalJSX.ZIcon & JSXBase.HTMLAttributes<HTMLZIconElement>;
+      'z-input': LocalJSX.ZInput & JSXBase.HTMLAttributes<HTMLZInputElement>;
       'z-label': LocalJSX.ZLabel & JSXBase.HTMLAttributes<HTMLZLabelElement>;
     }
   }
