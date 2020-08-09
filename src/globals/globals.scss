@@ -1,5 +1,11 @@
 :root {
   --font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-weigth: 400;
+  --font-weigth-bold: 700;
+  /* Font size is the basis of all other measurements */
+  --font-size: 16;
+  /* Line height is the basis for vertical spacing */
+  --line-height: calc(var(--font-size) * 1.5px);
 
   --color-gray: 89, 106, 129;
   --color-gray-1: rgba(var(--color-gray), 100%);
@@ -30,7 +36,9 @@
 }
 
 body {
-  font: 16px/1.5 var(--font-family);
+  font-size: calc(var(--font-size) * 1px);
+  font-family: var(--font-family);
+  font-weight: var(--font-weigth);
+  line-height: var(--line-height);
   color: var(--color-gray-1);
-  font-weight: 400;
 }

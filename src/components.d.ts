@@ -24,6 +24,14 @@ export namespace Components {
     'label': string;
     'placeholder': string;
   }
+  interface MyGrid {
+    'columns': String;
+    'columnsSmall': String;
+  }
+  interface MyGridCell {
+    'span': String;
+    'spanSmall': String;
+  }
 }
 
 declare global {
@@ -40,9 +48,23 @@ declare global {
     prototype: HTMLMyComboboxElement;
     new (): HTMLMyComboboxElement;
   };
+
+  interface HTMLMyGridElement extends Components.MyGrid, HTMLStencilElement {}
+  var HTMLMyGridElement: {
+    prototype: HTMLMyGridElement;
+    new (): HTMLMyGridElement;
+  };
+
+  interface HTMLMyGridCellElement extends Components.MyGridCell, HTMLStencilElement {}
+  var HTMLMyGridCellElement: {
+    prototype: HTMLMyGridCellElement;
+    new (): HTMLMyGridCellElement;
+  };
   interface HTMLElementTagNameMap {
     'my-chip': HTMLMyChipElement;
     'my-combobox': HTMLMyComboboxElement;
+    'my-grid': HTMLMyGridElement;
+    'my-grid-cell': HTMLMyGridCellElement;
   }
 }
 
@@ -63,10 +85,20 @@ declare namespace LocalJSX {
     'onMy-change'?: (event: CustomEvent<any>) => void;
     'placeholder'?: string;
   }
+  interface MyGrid {
+    'columns'?: String;
+    'columnsSmall'?: String;
+  }
+  interface MyGridCell {
+    'span'?: String;
+    'spanSmall'?: String;
+  }
 
   interface IntrinsicElements {
     'my-chip': MyChip;
     'my-combobox': MyCombobox;
+    'my-grid': MyGrid;
+    'my-grid-cell': MyGridCell;
   }
 }
 
@@ -78,6 +110,8 @@ declare module "@stencil/core" {
     interface IntrinsicElements {
       'my-chip': LocalJSX.MyChip & JSXBase.HTMLAttributes<HTMLMyChipElement>;
       'my-combobox': LocalJSX.MyCombobox & JSXBase.HTMLAttributes<HTMLMyComboboxElement>;
+      'my-grid': LocalJSX.MyGrid & JSXBase.HTMLAttributes<HTMLMyGridElement>;
+      'my-grid-cell': LocalJSX.MyGridCell & JSXBase.HTMLAttributes<HTMLMyGridCellElement>;
     }
   }
 }
