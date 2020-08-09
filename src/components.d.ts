@@ -10,17 +10,17 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 
 
 export namespace Components {
-  interface MyBanner {
+  interface ZBanner {
     'color': string;
   }
-  interface MyButton {
+  interface ZButton {
     'color': string;
   }
-  interface MyChip {
+  interface ZChip {
     'data': {};
-    'isDeletable': boolean;
+    'isDismissible': boolean;
   }
-  interface MyCombobox {
+  interface ZCombobox {
     'defaultOptions': any[];
     'isClearable': boolean;
     'isDisabled': boolean;
@@ -30,15 +30,34 @@ export namespace Components {
     'label': string;
     'placeholder': string;
   }
-  interface MyGrid {
+  interface ZGrid {
     'columns': String;
     'columnsSmall': String;
   }
-  interface MyGridCell {
+  interface ZGridCell {
     'span': String;
     'spanSmall': String;
   }
-  interface MyLabel {
+  interface ZIcon {
+    /**
+    * Specifies the label to use for accessibility. Defaults to the icon name.
+    */
+    'ariaLabel'?: string;
+    'color'?: string;
+    /**
+    * If enabled, icon will be loaded lazily when it's visible in the viewport. Default, `false`.
+    */
+    'lazy': boolean;
+    /**
+    * Specifies which icon to use from the built-in set of icons.
+    */
+    'name'?: string;
+    /**
+    * The size of the icon. Available options are: `"small"` and `"large"`.
+    */
+    'size'?: string;
+  }
+  interface ZLabel {
     'color': string;
   }
 }
@@ -46,71 +65,78 @@ export namespace Components {
 declare global {
 
 
-  interface HTMLMyBannerElement extends Components.MyBanner, HTMLStencilElement {}
-  var HTMLMyBannerElement: {
-    prototype: HTMLMyBannerElement;
-    new (): HTMLMyBannerElement;
+  interface HTMLZBannerElement extends Components.ZBanner, HTMLStencilElement {}
+  var HTMLZBannerElement: {
+    prototype: HTMLZBannerElement;
+    new (): HTMLZBannerElement;
   };
 
-  interface HTMLMyButtonElement extends Components.MyButton, HTMLStencilElement {}
-  var HTMLMyButtonElement: {
-    prototype: HTMLMyButtonElement;
-    new (): HTMLMyButtonElement;
+  interface HTMLZButtonElement extends Components.ZButton, HTMLStencilElement {}
+  var HTMLZButtonElement: {
+    prototype: HTMLZButtonElement;
+    new (): HTMLZButtonElement;
   };
 
-  interface HTMLMyChipElement extends Components.MyChip, HTMLStencilElement {}
-  var HTMLMyChipElement: {
-    prototype: HTMLMyChipElement;
-    new (): HTMLMyChipElement;
+  interface HTMLZChipElement extends Components.ZChip, HTMLStencilElement {}
+  var HTMLZChipElement: {
+    prototype: HTMLZChipElement;
+    new (): HTMLZChipElement;
   };
 
-  interface HTMLMyComboboxElement extends Components.MyCombobox, HTMLStencilElement {}
-  var HTMLMyComboboxElement: {
-    prototype: HTMLMyComboboxElement;
-    new (): HTMLMyComboboxElement;
+  interface HTMLZComboboxElement extends Components.ZCombobox, HTMLStencilElement {}
+  var HTMLZComboboxElement: {
+    prototype: HTMLZComboboxElement;
+    new (): HTMLZComboboxElement;
   };
 
-  interface HTMLMyGridElement extends Components.MyGrid, HTMLStencilElement {}
-  var HTMLMyGridElement: {
-    prototype: HTMLMyGridElement;
-    new (): HTMLMyGridElement;
+  interface HTMLZGridElement extends Components.ZGrid, HTMLStencilElement {}
+  var HTMLZGridElement: {
+    prototype: HTMLZGridElement;
+    new (): HTMLZGridElement;
   };
 
-  interface HTMLMyGridCellElement extends Components.MyGridCell, HTMLStencilElement {}
-  var HTMLMyGridCellElement: {
-    prototype: HTMLMyGridCellElement;
-    new (): HTMLMyGridCellElement;
+  interface HTMLZGridCellElement extends Components.ZGridCell, HTMLStencilElement {}
+  var HTMLZGridCellElement: {
+    prototype: HTMLZGridCellElement;
+    new (): HTMLZGridCellElement;
   };
 
-  interface HTMLMyLabelElement extends Components.MyLabel, HTMLStencilElement {}
-  var HTMLMyLabelElement: {
-    prototype: HTMLMyLabelElement;
-    new (): HTMLMyLabelElement;
+  interface HTMLZIconElement extends Components.ZIcon, HTMLStencilElement {}
+  var HTMLZIconElement: {
+    prototype: HTMLZIconElement;
+    new (): HTMLZIconElement;
+  };
+
+  interface HTMLZLabelElement extends Components.ZLabel, HTMLStencilElement {}
+  var HTMLZLabelElement: {
+    prototype: HTMLZLabelElement;
+    new (): HTMLZLabelElement;
   };
   interface HTMLElementTagNameMap {
-    'my-banner': HTMLMyBannerElement;
-    'my-button': HTMLMyButtonElement;
-    'my-chip': HTMLMyChipElement;
-    'my-combobox': HTMLMyComboboxElement;
-    'my-grid': HTMLMyGridElement;
-    'my-grid-cell': HTMLMyGridCellElement;
-    'my-label': HTMLMyLabelElement;
+    'z-banner': HTMLZBannerElement;
+    'z-button': HTMLZButtonElement;
+    'z-chip': HTMLZChipElement;
+    'z-combobox': HTMLZComboboxElement;
+    'z-grid': HTMLZGridElement;
+    'z-grid-cell': HTMLZGridCellElement;
+    'z-icon': HTMLZIconElement;
+    'z-label': HTMLZLabelElement;
   }
 }
 
 declare namespace LocalJSX {
-  interface MyBanner {
+  interface ZBanner {
     'color'?: string;
   }
-  interface MyButton {
+  interface ZButton {
     'color'?: string;
   }
-  interface MyChip {
+  interface ZChip {
     'data'?: {};
-    'isDeletable'?: boolean;
-    'onMy-chip-delete'?: (event: CustomEvent<any>) => void;
+    'isDismissible'?: boolean;
+    'onZ-chip-dismiss'?: (event: CustomEvent<any>) => void;
   }
-  interface MyCombobox {
+  interface ZCombobox {
     'defaultOptions'?: any[];
     'isClearable'?: boolean;
     'isDisabled'?: boolean;
@@ -118,29 +144,49 @@ declare namespace LocalJSX {
     'isOrdered'?: boolean;
     'isRequired'?: boolean;
     'label'?: string;
-    'onMy-change'?: (event: CustomEvent<any>) => void;
+    'onZ-change'?: (event: CustomEvent<any>) => void;
     'placeholder'?: string;
   }
-  interface MyGrid {
+  interface ZGrid {
     'columns'?: String;
     'columnsSmall'?: String;
   }
-  interface MyGridCell {
+  interface ZGridCell {
     'span'?: String;
     'spanSmall'?: String;
   }
-  interface MyLabel {
+  interface ZIcon {
+    /**
+    * Specifies the label to use for accessibility. Defaults to the icon name.
+    */
+    'ariaLabel'?: string;
+    'color'?: string;
+    /**
+    * If enabled, icon will be loaded lazily when it's visible in the viewport. Default, `false`.
+    */
+    'lazy'?: boolean;
+    /**
+    * Specifies which icon to use from the built-in set of icons.
+    */
+    'name'?: string;
+    /**
+    * The size of the icon. Available options are: `"small"` and `"large"`.
+    */
+    'size'?: string;
+  }
+  interface ZLabel {
     'color'?: string;
   }
 
   interface IntrinsicElements {
-    'my-banner': MyBanner;
-    'my-button': MyButton;
-    'my-chip': MyChip;
-    'my-combobox': MyCombobox;
-    'my-grid': MyGrid;
-    'my-grid-cell': MyGridCell;
-    'my-label': MyLabel;
+    'z-banner': ZBanner;
+    'z-button': ZButton;
+    'z-chip': ZChip;
+    'z-combobox': ZCombobox;
+    'z-grid': ZGrid;
+    'z-grid-cell': ZGridCell;
+    'z-icon': ZIcon;
+    'z-label': ZLabel;
   }
 }
 
@@ -150,13 +196,14 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
-      'my-banner': LocalJSX.MyBanner & JSXBase.HTMLAttributes<HTMLMyBannerElement>;
-      'my-button': LocalJSX.MyButton & JSXBase.HTMLAttributes<HTMLMyButtonElement>;
-      'my-chip': LocalJSX.MyChip & JSXBase.HTMLAttributes<HTMLMyChipElement>;
-      'my-combobox': LocalJSX.MyCombobox & JSXBase.HTMLAttributes<HTMLMyComboboxElement>;
-      'my-grid': LocalJSX.MyGrid & JSXBase.HTMLAttributes<HTMLMyGridElement>;
-      'my-grid-cell': LocalJSX.MyGridCell & JSXBase.HTMLAttributes<HTMLMyGridCellElement>;
-      'my-label': LocalJSX.MyLabel & JSXBase.HTMLAttributes<HTMLMyLabelElement>;
+      'z-banner': LocalJSX.ZBanner & JSXBase.HTMLAttributes<HTMLZBannerElement>;
+      'z-button': LocalJSX.ZButton & JSXBase.HTMLAttributes<HTMLZButtonElement>;
+      'z-chip': LocalJSX.ZChip & JSXBase.HTMLAttributes<HTMLZChipElement>;
+      'z-combobox': LocalJSX.ZCombobox & JSXBase.HTMLAttributes<HTMLZComboboxElement>;
+      'z-grid': LocalJSX.ZGrid & JSXBase.HTMLAttributes<HTMLZGridElement>;
+      'z-grid-cell': LocalJSX.ZGridCell & JSXBase.HTMLAttributes<HTMLZGridCellElement>;
+      'z-icon': LocalJSX.ZIcon & JSXBase.HTMLAttributes<HTMLZIconElement>;
+      'z-label': LocalJSX.ZLabel & JSXBase.HTMLAttributes<HTMLZLabelElement>;
     }
   }
 }
