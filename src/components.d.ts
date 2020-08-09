@@ -13,6 +13,9 @@ export namespace Components {
   interface MyBanner {
     'color': string;
   }
+  interface MyButton {
+    'color': string;
+  }
   interface MyChip {
     'data': {};
     'isDeletable': boolean;
@@ -46,6 +49,12 @@ declare global {
     new (): HTMLMyBannerElement;
   };
 
+  interface HTMLMyButtonElement extends Components.MyButton, HTMLStencilElement {}
+  var HTMLMyButtonElement: {
+    prototype: HTMLMyButtonElement;
+    new (): HTMLMyButtonElement;
+  };
+
   interface HTMLMyChipElement extends Components.MyChip, HTMLStencilElement {}
   var HTMLMyChipElement: {
     prototype: HTMLMyChipElement;
@@ -71,6 +80,7 @@ declare global {
   };
   interface HTMLElementTagNameMap {
     'my-banner': HTMLMyBannerElement;
+    'my-button': HTMLMyButtonElement;
     'my-chip': HTMLMyChipElement;
     'my-combobox': HTMLMyComboboxElement;
     'my-grid': HTMLMyGridElement;
@@ -80,6 +90,9 @@ declare global {
 
 declare namespace LocalJSX {
   interface MyBanner {
+    'color'?: string;
+  }
+  interface MyButton {
     'color'?: string;
   }
   interface MyChip {
@@ -109,6 +122,7 @@ declare namespace LocalJSX {
 
   interface IntrinsicElements {
     'my-banner': MyBanner;
+    'my-button': MyButton;
     'my-chip': MyChip;
     'my-combobox': MyCombobox;
     'my-grid': MyGrid;
@@ -123,6 +137,7 @@ declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
       'my-banner': LocalJSX.MyBanner & JSXBase.HTMLAttributes<HTMLMyBannerElement>;
+      'my-button': LocalJSX.MyButton & JSXBase.HTMLAttributes<HTMLMyButtonElement>;
       'my-chip': LocalJSX.MyChip & JSXBase.HTMLAttributes<HTMLMyChipElement>;
       'my-combobox': LocalJSX.MyCombobox & JSXBase.HTMLAttributes<HTMLMyComboboxElement>;
       'my-grid': LocalJSX.MyGrid & JSXBase.HTMLAttributes<HTMLMyGridElement>;

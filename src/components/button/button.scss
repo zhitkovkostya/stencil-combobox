@@ -1,0 +1,32 @@
+:host {
+  display: inline-flex;
+  border-radius: 4px;
+}
+
+:host([color="primary"]) {
+  color: var(--color-white);
+  background-color: var(--color-blue-1);
+}
+
+:host([color="secondary"]) {
+  color: var(--color-blue-1);
+  background-color: var(--color-blue-6);
+}
+
+:host([color="red"]) {
+  color: var(--color-red-1);
+  background-color: var(--color-red-6);
+}
+
+:host([color="green"]) {
+  color: var(--color-green-1);
+  background-color: var(--color-green-6);
+}
+
+.button {
+  padding: 8px 16px ;
+  background: transparent;
+  border: none;
+  font-size: var(--font-size-value);
+  color: currentColor;
+}
