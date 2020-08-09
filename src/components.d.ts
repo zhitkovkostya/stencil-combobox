@@ -38,24 +38,8 @@ export namespace Components {
     'span': String;
     'spanSmall': String;
   }
-  interface MyIcon {
-    /**
-    * Specifies the label to use for accessibility. Defaults to the icon name.
-    */
-    'ariaLabel'?: string;
-    'color'?: string;
-    /**
-    * If enabled, icon will be loaded lazily when it's visible in the viewport. Default, `false`.
-    */
-    'lazy': boolean;
-    /**
-    * Specifies which icon to use from the built-in set of icons.
-    */
-    'name'?: string;
-    /**
-    * The size of the icon. Available options are: `"small"` and `"large"`.
-    */
-    'size'?: string;
+  interface MyLabel {
+    'color': string;
   }
 }
 
@@ -98,10 +82,10 @@ declare global {
     new (): HTMLMyGridCellElement;
   };
 
-  interface HTMLMyIconElement extends Components.MyIcon, HTMLStencilElement {}
-  var HTMLMyIconElement: {
-    prototype: HTMLMyIconElement;
-    new (): HTMLMyIconElement;
+  interface HTMLMyLabelElement extends Components.MyLabel, HTMLStencilElement {}
+  var HTMLMyLabelElement: {
+    prototype: HTMLMyLabelElement;
+    new (): HTMLMyLabelElement;
   };
   interface HTMLElementTagNameMap {
     'my-banner': HTMLMyBannerElement;
@@ -110,7 +94,7 @@ declare global {
     'my-combobox': HTMLMyComboboxElement;
     'my-grid': HTMLMyGridElement;
     'my-grid-cell': HTMLMyGridCellElement;
-    'my-icon': HTMLMyIconElement;
+    'my-label': HTMLMyLabelElement;
   }
 }
 
@@ -145,24 +129,8 @@ declare namespace LocalJSX {
     'span'?: String;
     'spanSmall'?: String;
   }
-  interface MyIcon {
-    /**
-    * Specifies the label to use for accessibility. Defaults to the icon name.
-    */
-    'ariaLabel'?: string;
+  interface MyLabel {
     'color'?: string;
-    /**
-    * If enabled, icon will be loaded lazily when it's visible in the viewport. Default, `false`.
-    */
-    'lazy'?: boolean;
-    /**
-    * Specifies which icon to use from the built-in set of icons.
-    */
-    'name'?: string;
-    /**
-    * The size of the icon. Available options are: `"small"` and `"large"`.
-    */
-    'size'?: string;
   }
 
   interface IntrinsicElements {
@@ -172,7 +140,7 @@ declare namespace LocalJSX {
     'my-combobox': MyCombobox;
     'my-grid': MyGrid;
     'my-grid-cell': MyGridCell;
-    'my-icon': MyIcon;
+    'my-label': MyLabel;
   }
 }
 
@@ -188,7 +156,7 @@ declare module "@stencil/core" {
       'my-combobox': LocalJSX.MyCombobox & JSXBase.HTMLAttributes<HTMLMyComboboxElement>;
       'my-grid': LocalJSX.MyGrid & JSXBase.HTMLAttributes<HTMLMyGridElement>;
       'my-grid-cell': LocalJSX.MyGridCell & JSXBase.HTMLAttributes<HTMLMyGridCellElement>;
-      'my-icon': LocalJSX.MyIcon & JSXBase.HTMLAttributes<HTMLMyIconElement>;
+      'my-label': LocalJSX.MyLabel & JSXBase.HTMLAttributes<HTMLMyLabelElement>;
     }
   }
 }

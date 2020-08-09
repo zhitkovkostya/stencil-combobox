@@ -3,10 +3,10 @@
   --font-weigth: 400;
   --font-weigth-bold: 700;
   /* Font size is the basis of all other measurements */
-  --font-size: 16;
-  --font-size-value: calc(var(--font-size) * 1px);
+  --font-size: 16px;
+  --font-size-small: 12px;
   /* Line height is the basis for vertical spacing */
-  --line-height: calc(var(--font-size) * 1.5px);
+  --line-height: calc(var(--font-size) * 1.5);
 
   --color-white: #fff;
 
@@ -51,7 +51,7 @@
 }
 
 body {
-  font-size: var(--font-size-value);
+  font-size: var(--font-size);
   font-family: var(--font-family);
   font-weight: var(--font-weigth);
   line-height: var(--line-height);
