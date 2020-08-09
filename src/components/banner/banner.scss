@@ -1,0 +1,9 @@
+my-banner {
+  display: block;
+  padding: 16px;
+
+  &[color="gray"] { background: var(--color-gray-6); color: var(--color-gray-1) }
+  &[color="blue"] { background: var(--color-blue-6); color: var(--color-blue-1) }
+  &[color="red"] { background: var(--color-red-6); color: var(--color-red-1) }
+  &[color="green"] { background: var(--color-green-6); color: var(--color-green-1) }
+}

@@ -33,6 +33,7 @@
     "@stencil/core": "^1.4.0",
     "@storybook/addon-actions": "5.2.0",
     "@storybook/addon-jest": "5.2.0",
+    "@storybook/addon-knobs": "^5.3.19",
     "@storybook/addon-notes": "5.2.0",
     "@storybook/addon-viewport": "5.2.0",
     "@storybook/html": "5.2.0",
