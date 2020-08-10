@@ -1,5 +1,7 @@
 :root {
-  --font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+  --font-family-serif: Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+  --font-family-mono: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
   --font-weigth: 400;
   --font-weigth-bold: 700;
   /* Font size is the basis of all other measurements */
@@ -55,7 +57,7 @@
 
 body {
   font-size: var(--font-size);
-  font-family: var(--font-family);
+  font-family: var(--font-family-sans-serif);
   font-weight: var(--font-weigth);
   line-height: var(--line-height);
   color: var(--color-gray-1);
