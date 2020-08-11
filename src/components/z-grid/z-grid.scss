@@ -1,12 +1,8 @@
 /* Based on Raster v20 (dev package) (rsms.me/raster) */
 
-/* Variables */
-:root {
-  --column-gap: calc(var(--line-height) * 2);
-  --row-gap: var(--line-height);
-}
-
 z-grid {
+  --column-gap: calc(var(--line-height) * var(--font-size));
+  --row-gap: calc(var(--line-height) * var(--font-size));
   --grid-template-columns: repeat(4, 1fr);
   --grid-column-start: 1;
   --grid-column-end: -1;

@@ -3,14 +3,11 @@
   --color: var(--color-gray-1);
 
   display: inline-flex;
-  padding: 4px 16px;
+  padding: .25rem 1rem;
   border-radius: var(--border-radius);
   background-color: var(--background-color);
   color: var(--color);
-  font-size: var(--font-size-small);
-  text-transform: uppercase;
   font-weight: bold;
-  letter-spacing: 1px;
 }
 
 :host([color="blue"]) {

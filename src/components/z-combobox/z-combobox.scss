@@ -33,9 +33,9 @@ $option-border-color-focus: var(--color-blue-6);
         display: flex;
         width: 1rem;
         height: 1rem;
-        margin-left: 0.3rem;
+        margin-left: .3rem;
         align-items: center;
-        font-size: 0.3rem;
+        font-size: .4rem;
         color: var(--color-red-1);
       }
     }
@@ -55,6 +55,7 @@ $option-border-color-focus: var(--color-blue-6);
   &__search {
     display: flex;
     align-items: center;
+    font-size: 1rem;
     font-family: var(--font-family-sans-serif);
     line-height: 1;
   }
@@ -121,15 +122,15 @@ $option-border-color-focus: var(--color-blue-6);
   &__listbox {
     box-sizing: border-box;
     position: absolute;
-    top: calc(100% + 0.5rem);
+    top: calc(100% + .5rem);
     z-index: 1000;
     width: 100%;
-    max-height: 300px;
+    max-height: 12rem;
     margin: 0;
-    padding: 0.5rem;
+    padding: .5rem;
     border: 1px solid var(--color-gray-6);
     border-radius: var(--border-radius);
-    background: #fff;
+    background: var(--color-white);
     overflow-x: hidden;
     overflow-y: auto;
     box-shadow: var(--shadow);
@@ -141,7 +142,7 @@ $option-border-color-focus: var(--color-blue-6);
     display: flex;
     align-items: center;
     height: 2.5rem;
-    padding: 0 1.5rem;
+    padding: 0 2rem;
     border-radius: var(--border-radius);
     list-style: none;
     color: var(--color-gray-1);

@@ -217,10 +217,9 @@ export class ZCombobox {
                 aria-selected={String(this.checkSelectedState(option))}
                 onClick={this.onOptionClick.bind(this, option)}
               >
-                <svg class='combobox__option-check' viewBox='0 0 24 24' width='16' height='16' stroke='currentColor' stroke-width='2' fill='none'
-                     stroke-linecap='round' stroke-linejoin='round'>
-                  <polyline points='20 6 9 17 4 12'></polyline>
-                </svg>
+                <span class='combobox__option-check'>
+                  <z-icon name='navigation-check'/>
+                </span>
                 {option.text}
               </li>
             ))

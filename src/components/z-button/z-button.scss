@@ -1,6 +1,6 @@
 :host {
   display: inline-flex;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
 }
 
 :host([color="primary"]) {
@@ -24,7 +24,7 @@
 }
 
 .button {
-  padding: 8px 16px ;
+  padding: .5rem 1rem;
   background: transparent;
   border: none;
   font-size: var(--font-size);

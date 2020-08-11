@@ -3,7 +3,7 @@ import { withKnobs, select, text } from '@storybook/addon-knobs';
 
 import readme from './readme.md';
 
-storiesOf('z-banner', module)
+storiesOf('Components|z-banner', module)
   .addDecorator(withKnobs)
   .addParameters({ jest: ['z-banner'] })
   .add('default', () => {

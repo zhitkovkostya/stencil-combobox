@@ -977,7 +977,7 @@ const names = {
   'toggle-star-half': 'toggle-star-half',
 };
 
-storiesOf('z-icon', module)
+storiesOf('Components|z-icon', module)
   .addDecorator(withKnobs)
   .addParameters({ jest: ['z-icon'] })
   .add('default', () => {

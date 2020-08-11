@@ -25,7 +25,7 @@ const selectedOptions = [
   {value: 2, text: 'Australia'}
 ];
 
-storiesOf('z-combobox', module)
+storiesOf('Components|z-combobox', module)
   .addDecorator(withActions('z-change'))
   .addDecorator(withActions('z-chip-dismiss'))
   .addParameters({ jest: ['z-combobox'] })

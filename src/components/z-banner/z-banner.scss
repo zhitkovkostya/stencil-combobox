@@ -1,6 +1,6 @@
 z-banner {
   display: block;
-  padding: 16px;
+  padding: 1rem;
 
   &[color="gray"] { background: var(--color-gray-6); color: var(--color-gray-1) }
   &[color="blue"] { background: var(--color-blue-6); color: var(--color-blue-1) }

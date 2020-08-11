@@ -3,7 +3,7 @@ import { withKnobs, select, text } from '@storybook/addon-knobs';
 
 import readme from './readme.md';
 
-storiesOf('z-label', module)
+storiesOf('Components|z-label', module)
   .addDecorator(withKnobs)
   .addParameters({ jest: ['z-label'] })
   .add('default', () => {
