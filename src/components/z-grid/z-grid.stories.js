@@ -4,7 +4,7 @@ import readme from './readme.md';
 
 const demoBlockEl = (text) => `<div style="display: block; width: 100%; height: calc(var(--line-height) * var(--font-size)); padding-left: .25rem; background-color: var(--color-blue-1); border-radius: 4px; color: #fff">${text}</div>`;
 
-storiesOf('Guidelines|Grid', module)
+storiesOf('Guidelines/Grid', module)
   .addParameters({ jest: ['z-grid'] })
   .add('default', () => {
     return `

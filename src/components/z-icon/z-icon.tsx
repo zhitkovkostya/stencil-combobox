@@ -1,4 +1,4 @@
-import { Build, Component, Element, h, Host, Prop, State, Watch, getAssetPath } from '@stencil/core';
+import { Build, Component, Element, h, Host, Prop, State, Watch } from '@stencil/core';
 import {getSvgContent} from './utils';
 
 @Component({
@@ -78,7 +78,8 @@ export class ZIcon {
   @Watch('name')
   loadIcon() {
     if (Build.isBrowser && this.isVisible) {
-      const url = getAssetPath(`assets/${this.name}.svg`);;
+      // const url = getAssetPath(`assets/${this.name}.svg`);
+      const url = `/z-ui/assets/${this.name}.svg`;
       if (url) {
         getSvgContent(url)
           .then(svgContent => this.svgContent = svgContent);
