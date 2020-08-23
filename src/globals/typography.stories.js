@@ -1,6 +1,6 @@
 import {storiesOf} from '@storybook/html';
 
-storiesOf('Guidelines|Typography', module)
+storiesOf('Guidelines/Typography', module)
   .add('Display', () => `
     <h1>Display 1</h1>
     <h2>Display 2</h2>

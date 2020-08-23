@@ -3,7 +3,7 @@ import {withActions} from '@storybook/addon-actions';
 
 import readme from './readme.md';
 
-storiesOf('Components|z-chip', module)
+storiesOf('Components/z-chip', module)
   .addDecorator(withActions('z-chip-dismiss'))
   .addParameters({ jest: ['z-chip'] })
   .add('default', () => {
