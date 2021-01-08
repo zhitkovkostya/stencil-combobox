@@ -994,13 +994,12 @@ storiesOf('Components/z-icon', module)
     const name = select('Name', names, 'action-android');
     const color = select('Color', {
       '--': null,
-      'Blue 1': 'blue-1',
-      'Blue 2': 'blue-2',
-      'Blue 3': 'blue-3',
-      'Blue 4': 'blue-4',
-      'Blue 5': 'blue-5',
-      'Blue 6': 'blue-6',
-    }, 'blue-1');
+      'Ink': 'ink',
+      'Blue': 'blue',
+      'Green': 'green',
+      'Yellow': 'yellow',
+      'Red': 'red',
+    }, 'ink');
     return `
       <z-icon name="${name}" color="${color}"/>
     `

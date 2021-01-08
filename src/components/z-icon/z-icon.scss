@@ -10,28 +10,24 @@
   }
 }
 
-:host([color="blue-1"]) {
-  --color: var(--color-blue-1);
+:host([color="blue"]) {
+  --color: var(--color-blue-darken-5);
 }
 
-:host([color="blue-2"]) {
-  --color: var(--color-blue-2);
+:host([color="ink"]) {
+  --color: var(--color-ink);
 }
 
-:host([color="blue-3"]) {
-  --color: var(--color-blue-3);
+:host([color="green"]) {
+  --color: var(--color-green-darken-5);
 }
 
-:host([color="blue-4"]) {
-  --color: var(--color-blue-4);
+:host([color="yellow"]) {
+  --color: var(--color-yellow-darken-5);
 }
 
-:host([color="blue-5"]) {
-  --color: var(--color-blue-5);
-}
-
-:host([color="blue-6"]) {
-  --color: var(--color-blue-6);
+:host([color="red"]) {
+  --color: var(--color-red-darken-5);
 }
 
 :host([size="small"]) {

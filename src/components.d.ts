@@ -59,6 +59,12 @@ export namespace Components {
     interface ZLabel {
         "color": string;
     }
+    interface ZPalette {
+    }
+    interface ZPaletteItem {
+        "isLarge": boolean;
+        "name": string;
+    }
 }
 declare global {
     interface HTMLZBannerElement extends Components.ZBanner, HTMLStencilElement {
@@ -115,6 +121,18 @@ declare global {
         prototype: HTMLZLabelElement;
         new (): HTMLZLabelElement;
     };
+    interface HTMLZPaletteElement extends Components.ZPalette, HTMLStencilElement {
+    }
+    var HTMLZPaletteElement: {
+        prototype: HTMLZPaletteElement;
+        new (): HTMLZPaletteElement;
+    };
+    interface HTMLZPaletteItemElement extends Components.ZPaletteItem, HTMLStencilElement {
+    }
+    var HTMLZPaletteItemElement: {
+        prototype: HTMLZPaletteItemElement;
+        new (): HTMLZPaletteItemElement;
+    };
     interface HTMLElementTagNameMap {
         "z-banner": HTMLZBannerElement;
         "z-button": HTMLZButtonElement;
@@ -125,6 +143,8 @@ declare global {
         "z-icon": HTMLZIconElement;
         "z-input": HTMLZInputElement;
         "z-label": HTMLZLabelElement;
+        "z-palette": HTMLZPaletteElement;
+        "z-palette-item": HTMLZPaletteItemElement;
     }
 }
 declare namespace LocalJSX {
@@ -183,6 +203,12 @@ declare namespace LocalJSX {
     interface ZLabel {
         "color"?: string;
     }
+    interface ZPalette {
+    }
+    interface ZPaletteItem {
+        "isLarge"?: boolean;
+        "name": string;
+    }
     interface IntrinsicElements {
         "z-banner": ZBanner;
         "z-button": ZButton;
@@ -193,6 +219,8 @@ declare namespace LocalJSX {
         "z-icon": ZIcon;
         "z-input": ZInput;
         "z-label": ZLabel;
+        "z-palette": ZPalette;
+        "z-palette-item": ZPaletteItem;
     }
 }
 export { LocalJSX as JSX };
@@ -208,6 +236,8 @@ declare module "@stencil/core" {
             "z-icon": LocalJSX.ZIcon & JSXBase.HTMLAttributes<HTMLZIconElement>;
             "z-input": LocalJSX.ZInput & JSXBase.HTMLAttributes<HTMLZInputElement>;
             "z-label": LocalJSX.ZLabel & JSXBase.HTMLAttributes<HTMLZLabelElement>;
+            "z-palette": LocalJSX.ZPalette & JSXBase.HTMLAttributes<HTMLZPaletteElement>;
+            "z-palette-item": LocalJSX.ZPaletteItem & JSXBase.HTMLAttributes<HTMLZPaletteItemElement>;
         }
     }
 }

@@ -1,0 +1,51 @@
+@function transcluent($hex, $alpha) {
+  @return rgba(red($hex), green($hex), blue($hex), $alpha);
+}
+
+:root {
+  /**
+   * Primary colors
+   */
+  $color-ink: #212B36;
+  $color-sky: #DFE3E8;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --color-ink: #{$color-ink};
+  --color-ink-lighten-20: #{lighten($color-ink, 20%)};
+  --color-ink-lighten-40: #{lighten($color-ink, 40%)};
+  --color-ink-transcluent-20: #{transcluent($color-ink, 20%)};
+  --color-ink-transcluent-60: #{transcluent($color-ink, 60%)};
+
+  --color-sky: #{$color-sky};
+  --color-sky-lighten-5: #{lighten($color-sky, 5%)};
+  --color-sky-lighten-10: #{lighten($color-sky, 10%)};
+  --color-sky-transcluent-60: #{transcluent($color-sky, 60%)};
+
+
+  /**
+   * Secondary colors
+   */
+  $color-green: #50B83C;
+  $color-yellow: #EEC200;
+  $color-red: #DE3618;
+  $color-purple: #9C6ADE;
+  $color-blue: #0468FF;
+
+  --color-green: #{$color-green};
+  --color-green-darken-5: #{darken($color-green, 5%)};
+  --color-green-transcluent-10: #{transcluent($color-green, 10%)};
+
+  --color-yellow: #{$color-yellow};
+  --color-yellow-darken-5: #{darken($color-yellow, 5%)};
+  --color-yellow-transcluent-10: #{transcluent($color-yellow, 10%)};
+
+  --color-red: #{$color-red};
+  --color-red-darken-5: #{darken($color-red, 5%)};
+  --color-red-transcluent-10: #{transcluent($color-red, 10%)};
+
+  --color-blue: #{$color-blue};
+  --color-blue-darken-5: #{darken($color-blue, 5%)};
+  --color-blue-transcluent-10: #{transcluent($color-blue, 10%)};
+}

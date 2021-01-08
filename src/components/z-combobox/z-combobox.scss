@@ -1,9 +1,4 @@
-@import "../../globals/field";
-
-$field-color-placeholder: var(--color-gray-2);
-$field-color-icon: var(--color-gray-2);
-$field-color-icon-hover: var(--color-gray-1);
-$option-border-color-focus: var(--color-blue-6);
+@import '../../globals/field';
 
 * {
   box-sizing: border-box;
@@ -36,7 +31,7 @@ $option-border-color-focus: var(--color-blue-6);
         margin-left: .3rem;
         align-items: center;
         font-size: .4rem;
-        color: var(--color-red-1);
+        color: var(--color-red-darken-5);
       }
     }
   }
@@ -68,7 +63,7 @@ $option-border-color-focus: var(--color-blue-6);
     outline: none;
 
     &::placeholder {
-      color: $field-color-placeholder;
+      color: var(--color-ink);
     }
   }
 
@@ -103,11 +98,11 @@ $option-border-color-focus: var(--color-blue-6);
     height: 2rem;
     background-color: transparent;
     border: none;
-    color: $field-color-icon;
+    color: var(--color-ink-lighten-40);
     outline: none;
 
     &:hover {
-      color: $field-color-icon-hover;
+      opacity: var(--hover-opacity);
     }
   }
 
@@ -128,7 +123,7 @@ $option-border-color-focus: var(--color-blue-6);
     max-height: 12rem;
     margin: 0;
     padding: .5rem;
-    border: 1px solid var(--color-gray-6);
+    border: none;
     border-radius: var(--border-radius);
     background: var(--color-white);
     overflow-x: hidden;
@@ -145,7 +140,7 @@ $option-border-color-focus: var(--color-blue-6);
     padding: 0 2rem;
     border-radius: var(--border-radius);
     list-style: none;
-    color: var(--color-gray-1);
+    color: var(--color-ink);
     text-overflow: ellipsis;
     white-space: nowrap;
 
@@ -153,7 +148,7 @@ $option-border-color-focus: var(--color-blue-6);
       cursor: pointer;
 
       &:hover {
-        background: var(--color-gray-6);
+        opacity: var(--hover-opacity);
       }
     }
 
@@ -164,7 +159,7 @@ $option-border-color-focus: var(--color-blue-6);
     }
 
     &--focused {
-      box-shadow: inset 0 0 0 2px $option-border-color-focus;
+      box-shadow: inset 0 0 0 2px var(--color-blue-darken-5);
     }
   }
 
@@ -174,6 +169,6 @@ $option-border-color-focus: var(--color-blue-6);
     left: .25rem;
     transform: translate(0, -50%);
     display: none;
-    color: var(--color-blue-1);
+    color: var(--color-blue-darken-5);
   }
 }

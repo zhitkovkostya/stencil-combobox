@@ -1,0 +1,26 @@
+.palette-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  color: var(--color-sky-lighten-10);
+  line-height: 2rem;
+
+  &--light {
+    color: var(--color-ink);
+  }
+
+  &--large {
+    line-height: 4rem;
+  }
+
+  &__name {
+    font-size: 14px;
+  }
+
+  &__value {
+    font-size: 10px;
+    font-family: var(--font-family-mono);
+    text-transform: uppercase;
+  }
+}

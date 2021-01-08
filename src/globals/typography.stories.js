@@ -8,5 +8,5 @@ storiesOf('Guidelines/Typography', module)
   `)
   .add('Body', () => `
     <div>Body</div>
-    <div class="text text--small">Body Small</div>
+    <small>Body Small</small>
   `);

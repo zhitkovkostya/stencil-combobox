@@ -7,17 +7,17 @@
   width: 100%;
   min-height: 2.5rem;
   padding: .125rem 0.25rem .125rem 1rem;
-  border: none;
+  border: 1px solid var(--color-ink-lighten-40);
   border-radius: var(--border-radius);
-  background-color: var(--color-gray-6);
+  background-color: var(--color-sky-lighten-10);
   font-size: 1rem;
   color: var(--color-black);
   cursor: text;
   user-select: none;
-  transition: background-color 300ms;
+  transition: border-color 300ms;
   box-sizing: border-box;
 
   &:hover {
-    background-color: var(--color-gray-5);
+    border-color: var(--color-ink-lighten-20);
   }
 }

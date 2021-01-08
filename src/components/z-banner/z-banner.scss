@@ -2,8 +2,9 @@ z-banner {
   display: block;
   padding: 1rem;
 
-  &[color="gray"] { background: var(--color-gray-6); color: var(--color-gray-1) }
-  &[color="blue"] { background: var(--color-blue-6); color: var(--color-blue-1) }
-  &[color="red"] { background: var(--color-red-6); color: var(--color-red-1) }
-  &[color="green"] { background: var(--color-green-6); color: var(--color-green-1) }
+  &[color="sky"] { background: var(--color-sky); color: var(--color-ink) }
+  &[color="blue"] { background: var(--color-blue-transcluent-10); color: var(--color-blue-darken-5) }
+  &[color="red"] { background: var(--color-red-transcluent-10); color: var(--color-red-darken-5) }
+  &[color="yellow"] { background: var(--color-yellow-transcluent-10); color: var(--color-yellow-darken-5) }
+  &[color="green"] { background: var(--color-green-transcluent-10); color: var(--color-green-darken-5) }
 }

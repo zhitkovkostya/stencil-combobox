@@ -1,6 +1,6 @@
 :host {
-  --background-color: var(--color-gray-6);
-  --color: var(--color-gray-1);
+  --background-color: var(--color-white);
+  --color: var(--color-ink);
 
   display: inline-flex;
   padding: .25rem 1rem;
@@ -11,16 +11,16 @@
 }
 
 :host([color="blue"]) {
-  --background-color: var(--color-blue-6);
-  --color: var(--color-blue-1);
+  --background-color: var(--color-blue-transcluent-10);
+  --color: var(--color-blue-darken-5);
 }
 
 :host([color="green"]) {
-  --background-color: var(--color-green-6);
-  --color: var(--color-green-1);
+  --background-color: var(--color-green-transcluent-10);
+  --color: var(--color-green-darken-5);
 }
 
 :host([color="red"]) {
-  --background-color: var(--color-red-6);
-  --color: var(--color-red-1);
+  --background-color: var(--color-red-transcluent-10);
+  --color: var(--color-red-darken-5);
 }
