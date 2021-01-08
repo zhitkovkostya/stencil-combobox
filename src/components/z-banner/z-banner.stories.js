@@ -11,7 +11,7 @@ export default {
     color: {
       control: {
         type: 'select',
-        options: ['gray', 'blue', 'green', 'red']
+        options: ['sky', 'blue', 'green', 'yellow', 'red']
       }
     }
   }

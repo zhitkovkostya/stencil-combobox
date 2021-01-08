@@ -5,22 +5,22 @@
 
 :host([color="primary"]) {
   color: var(--color-white);
-  background-color: var(--color-blue-1);
+  background-color: var(--color-blue);
 }
 
 :host([color="secondary"]) {
-  color: var(--color-blue-1);
-  background-color: var(--color-blue-6);
+  color: var(--color-blue-darken-5);
+  background-color: var(--color-blue-transcluent-10);
 }
 
 :host([color="red"]) {
-  color: var(--color-red-1);
-  background-color: var(--color-red-6);
+  color: var(--color-red-darken-5);
+  background-color: var(--color-red-transcluent-10);
 }
 
 :host([color="green"]) {
-  color: var(--color-green-1);
-  background-color: var(--color-green-6);
+  color: var(--color-green-darken-5);
+  background-color: var(--color-green-transcluent-10);
 }
 
 .button {

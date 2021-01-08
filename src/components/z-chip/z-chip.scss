@@ -3,7 +3,7 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--color-gray-6);
+  background-color: var(--color-sky-transcluent-60);
   height: 2rem;
   padding: 0;
   border: none;
@@ -33,12 +33,12 @@
     padding: 0;
     background-color: transparent;
     border: none;
-    color: var(--color-gray-3);
+    color: var(--color-red-darken-5);
     outline: none;
     cursor: pointer;
 
     &:hover {
-      color: var(--color-gray-2);
+      opacity: var(--hover-opacity);
     }
   }
 }

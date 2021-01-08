@@ -1,4 +1,5 @@
 :root {
+  --hover-opacity: .8;
   --border-radius: .25rem;
-  --shadow: 0 .5em 1em rgba(var(--color-gray), .25);
+  --shadow: 0 .5em 1em var(--color-ink-transcluent-20);
 }
